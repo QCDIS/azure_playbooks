@@ -4,7 +4,13 @@
 
   tasks:
     - package:
-        name: jq
+        name:
+        - jq
+        - gcc
+        - libffi-devel
+        - python36u-devel
+        - openssl-devel
+        - curl
         state: present
       become: yes
 
