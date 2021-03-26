@@ -19,7 +19,10 @@
 #  when: stat_result.stat.exists
 
 - azure_rm_virtualmachineimage_info:
-    location: "{{location}}"
+    location: eastus
+    publisher: OpenLogic
+    offer: CentOS
+    sku: '7.1'
 
 
 - azure_rm_image_info:
