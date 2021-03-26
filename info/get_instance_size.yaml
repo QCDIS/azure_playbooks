@@ -1,0 +1,14 @@
+- hosts: localhost
+  collections:
+    - awx.awx
+  vars:
+    ansible_python_interpreter: /usr/bin/python3
+
+  tasks:
+
+    - shell: az vm list-skus
+      register: instance_size_output
+
+
+    - debug:
+        var: instance_size_output

@@ -6,7 +6,6 @@
 
   tasks:
 
-
     - azure_rm_virtualmachine:
         resource_group: "{{ resource_group_name }}"
         name: "{{ name }}"
@@ -17,5 +16,8 @@
           - path: /home/azureuser/.ssh/authorized_keys
             key_data: <your-key-data>
         network_interfaces: "{{network_interfaces}}"
-        image:
-          id: "{{image_id}}"
+          image:
+            offer: "{{ item.value.os_distro }}"
+            sku: "{{ item.value.os_version }}"
+            version: latest
+    loop: "{{ hostvars['localhost']['instances'] | dict2items }}"
