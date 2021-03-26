@@ -20,7 +20,7 @@
 
 - azure_rm_virtualmachineimage_info:
     location: "{{location}}"
-  register: image_info_output
+  register: image_info_output_2
   when: not stat_result.stat.exists
 
 - debug:
