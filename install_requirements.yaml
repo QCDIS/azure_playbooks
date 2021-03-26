@@ -19,5 +19,6 @@
           - ansible-tower-cli
 #          - azure-mgmt-compute
 
+    - shell: curl -L https://aka.ms/InstallAzureCli | bash
 
 
