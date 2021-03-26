@@ -1,0 +1,12 @@
+- hosts: localhost
+  collections:
+    - awx.awx
+  vars:
+    ansible_python_interpreter: /usr/bin/python3
+
+  tasks:
+    - azure_rm_subnet:
+        resource_group: "{{ resource_group_name }}"
+        name: "{{ resource_group_name }}"
+        address_prefix: "172.16.0.0/24"
+        virtual_network: "{{ resource_group_name }}"

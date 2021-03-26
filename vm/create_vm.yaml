@@ -1,0 +1,21 @@
+- hosts: localhost
+  collections:
+    - awx.awx
+  vars:
+    ansible_python_interpreter: /usr/bin/python3
+
+  tasks:
+
+
+    - azure_rm_virtualmachine:
+        resource_group: "{{ resource_group_name }}"
+        name: "{{ name }}"
+        vm_size: "{{ flavor }}"
+        admin_username: "{{ username }}"
+        ssh_password_enabled: false
+        ssh_public_keys:
+          - path: /home/azureuser/.ssh/authorized_keys
+            key_data: <your-key-data>
+        network_interfaces: "{{network_interfaces}}"
+        image:
+          id: "{{image_id}}"

@@ -18,6 +18,10 @@
 #    name: image_info_output_cache
 #  when: stat_result.stat.exists
 
+- azure_rm_virtualmachineimage_info:
+    location: "{{location}}"
+
+
 - azure_rm_image_info:
   register: image_info_output_2
 

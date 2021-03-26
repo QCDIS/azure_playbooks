@@ -1,0 +1,33 @@
+- hosts: localhost
+  collections:
+    - awx.awx
+  vars:
+    ansible_python_interpreter: /usr/bin/python3
+
+  tasks:
+   - azure_rm_securitygroup:
+      resource_group:  "{{ resource_group_name }}"
+      name:  "{{ resource_group_name }}"
+      rules:
+        - name: SSH
+          protocol: Tcp
+          destination_port_range: 22
+          access: Allow
+          priority: 1001
+          direction: Inbound
+        - name: http
+          protocol: Tcp
+          destination_port_range:
+            - 80
+            - 443
+            - 8080
+            - 6443
+          access: Allow
+          priority: 1002
+          direction: Inbound
+        - name: k8s
+          protocol: Tcp
+          destination_port_range: 30000-32767
+          access: Allow
+          priority: 1003
+          direction: Inbound

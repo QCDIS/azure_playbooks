@@ -1,0 +1,11 @@
+- hosts: localhost
+  collections:
+    - awx.awx
+  vars:
+    ansible_python_interpreter: /usr/bin/python3
+
+  tasks:
+    - azure_rm_publicipaddress:
+        resource_group: "{{ resource_group_name }}"
+        name: "{{ resource_group_name }}"
+        allocation_method: Static
