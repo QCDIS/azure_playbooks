@@ -6,10 +6,6 @@
     - package:
         name:
         - jq
-        - gcc
-        - libffi-devel
-        - openssl-devel
-        - curl
         state: present
       become: yes
 
