@@ -8,7 +8,6 @@
         - jq
         - gcc
         - libffi-devel
-        - python36u-devel
         - openssl-devel
         - curl
         state: present
@@ -23,8 +22,9 @@
           - ansible[azure]
           - msrest
           - ansible-tower-cli
+          - azure-cli
 #          - azure-mgmt-compute
 
-    - shell: curl -L https://aka.ms/InstallAzureCli | bash
+#    - shell: yes | curl -L https://aka.ms/InstallAzureCli | bash
 
 

@@ -6,7 +6,7 @@
 
   tasks:
 
-    - shell: az vm list-skus
+    - shell: /var/lib/awx/bin/az vm list-skus
       register: instance_size_output
 
 
