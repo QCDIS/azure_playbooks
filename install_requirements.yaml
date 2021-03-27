@@ -6,6 +6,8 @@
     - package:
         name:
         - jq
+        - gcc
+        - python3-devel
         state: present
       become: yes
 
