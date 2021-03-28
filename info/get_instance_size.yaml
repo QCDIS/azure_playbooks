@@ -7,7 +7,7 @@
   tasks:
     - name: List all available images under current subscription
       azure_rm_image_info:
-    register: instance_size_output
+      register: instance_size_output
 
 
 
