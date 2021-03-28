@@ -5,9 +5,13 @@
     ansible_python_interpreter: /usr/bin/python3
 
   tasks:
+    - name: List all available images under current subscription
+      azure_rm_image_info:
+    register: instance_size_output
 
-    - shell: /var/lib/awx/bin/az vm list-skus
-      register: instance_size_output
+
+#    - shell: /var/lib/awx/bin/az vm list-skus
+#      register: instance_size_output
 
 
     - debug:
