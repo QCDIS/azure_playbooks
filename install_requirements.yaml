@@ -20,7 +20,7 @@
           - ansible[azure]
           - msrest
           - ansible-tower-cli
-          - azure-cli
+#          - azure-cli
 #          - azure-nspkg
 #          - azure-mgmt-nspkg
 #          - azure-mgmt-compute
