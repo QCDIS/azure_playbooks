@@ -20,7 +20,7 @@
           - ansible[azure]
           - msrest
           - ansible-tower-cli
-          - azure.mgmt
+#           - azure.mgmt
 
 #    - shell: yes | curl -L https://aka.ms/InstallAzureCli | bash
 
