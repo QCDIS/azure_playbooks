@@ -3,11 +3,11 @@
 from azure.common.credentials import ServicePrincipalCredentials
 from azure.mgmt.compute import ComputeManagementClient
 
-azure_client_id = '... service principal application id ...'
-azure_secret = '... service principal secret/key ...'
-azure_subscription_id = '... your subscription id ...'
-azure_tenant = '... your tenant id ...'
-region = '... substitute your region here ...'
+azure_client_id = sys.argv[1]
+azure_secret = sys.argv[2]
+azure_subscription_id = sys.argv[3]
+azure_tenant = sys.argv[4]
+region = sys.argv[5]
 
 credentials = ServicePrincipalCredentials(
     client_id=azure_client_id,
