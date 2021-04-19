@@ -18,7 +18,7 @@
     - local_action: copy content={{ resourcegroup_output }} dest=/tmp/resourcegroup_output.json
         
  
-    - include_tasks: create_resource_group.yaml
+    - include_tasks: resource_group.yaml
       vars:
         instance_name: "{{ item.key }}"
       loop: "{{ instances | dict2items }}"
