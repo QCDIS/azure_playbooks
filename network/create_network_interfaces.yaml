@@ -22,14 +22,6 @@
         
     - local_action: copy content={{ subnet_output }} dest=/tmp/subnet_output.json
 
-    - azure_rm_publicipaddress:
-        resource_group: "{{ resource_group_name }}"
-        name: "{{ resource_group_name }}"
-        allocation_method: Static
-      register: publicipaddress_output
-        
-    - local_action: copy content={{ publicipaddress_output }} dest=/tmp/publicipaddress_output.json
-
     - azure_rm_securitygroup:
         resource_group:  "{{ resource_group_name }}"
         name:  "{{ resource_group_name }}"
@@ -59,18 +51,6 @@
       register: securitygroup_output
         
     - local_action: copy content={{ securitygroup_output }} dest=/tmp/securitygroup_output.json
-
-
-    - azure_rm_networkinterface:
-        resource_group:  "{{ resource_group_name }}"
-        name:  "{{ resource_group_name }}"
-        virtual_network: "{{ resource_group_name }}"
-        subnet: "{{ resource_group_name }}"
-        public_ip_name: "{{ resource_group_name }}"
-        security_group: "{{ resource_group_name }}"
-      register: networkinterface_output
-
-    - local_action: copy content={{ networkinterface_output }} dest=/tmp/networkinterface_output.json
 
     - include_tasks: network_interface.yaml
       vars:
