@@ -1,0 +1,8 @@
+- shell: jq -r '.state | {"{{ item.key }}":{attributes:{resourcegroup:.name}}}' /tmp/networkinterface_output.json
+  register: networkinterface
+
+
+- set_stats:
+    data:
+      resourcegroup: "{{ networkinterface.stdout }}"
+  register: networkinterface_stats_output
