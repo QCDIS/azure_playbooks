@@ -1,6 +1,6 @@
 - azure_rm_publicipaddress:
    resource_group: "{{ resource_group_name }}"
-   name: "{{ resource_group_name }}"
+   name: "{{ resource_group_name }}_{{item.key}}"
    allocation_method: Static
   register: publicipaddress_output
 - local_action: copy content={{ publicipaddress_output }} dest=/tmp/publicipaddress_output_{{item.key}}.json
