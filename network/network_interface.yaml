@@ -3,10 +3,7 @@
    name: "{{ resource_group_name }}"
    allocation_method: Static
   register: publicipaddress_output
-# - local_action: copy content={{ publicipaddress_output }} dest=/tmp/publicipaddress_output_{{item.key}}.json
-
-- debug:
-   var: publicipaddress_output
+- local_action: copy content={{ publicipaddress_output }} dest=/tmp/publicipaddress_output_{{item.key}}.json
 
 - azure_rm_networkinterface:
    resource_group:  "{{ resource_group_name }}"
@@ -16,12 +13,15 @@
    public_ip_name: "{{ resource_group_name }}"
    security_group: "{{ resource_group_name }}"
   register: networkinterface_output
+- local_action: copy content={{ networkinterface_output }} dest=/tmp/networkinterface_output{{item.key}}.json
   
 - shell: jq -s '.[0] * .[1]' /tmp/virtualnetwork_output.json /tmp/subnet_output.json > /tmp/virtualnetwork_subnet.json
  
 - shell: jq -s '.[0] * .[1]' /tmp/virtualnetwork_subnet.json /tmp/securitygroup_output.json > /tmp/virtualnetwork_subnet_securitygroup.json
+
+- shell: jq -s '.[0] * .[1]' /tmp/virtualnetwork_subnet.json /tmp/securitygroup_output.json > /tmp/virtualnetwork_subnet_securitygroup.json
  
-- shell: jq -r '.state | {"{{ item.key }}":{attributes:{virtualnetwork:.name,networkinterface:{{ resource_group_name }}_{{item.key}},subnet:.name,securitygroup:.name,public_ip:.ip_address}}}' /tmp/virtualnetwork_subnet_publicipaddress_securitygroup_networkinterface.json
+- shell: jq -r '.state | {"{{ item.key }}":{attributes:{virtualnetwork:.name,networkinterface:"{{ resource_group_name }}"_"{{item.key}}",subnet:.name,securitygroup:.name,public_ip:.ip_address}}}' /tmp/virtualnetwork_subnet_publicipaddress_securitygroup_networkinterface.json
  register: networkinterface
 
 
