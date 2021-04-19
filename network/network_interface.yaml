@@ -19,7 +19,7 @@
   
 
 - debug:
-   var: publicipaddress_output
+   var: networkinterface_output
 
 # - local_action: copy content={{ networkinterface_output }} dest=/tmp/networkinterface_output_{{item.key}}.json
     
