@@ -1,0 +1,15 @@
+- shell: jq '.' /tmp/resourcegroup_output.json
+  register: resourcegroup_output
+
+- debug:
+    var: resourcegroup_output.stdout
+
+# - shell: jq -r '.key | { "{{ item.key }}":{ attributes:{ resourcegroup:{ protocol:"ssh",keys:{id:.id, private_key:"{{private_key_base64.stdout}}", name:.name} }}}}' /tmp/key_output.json
+#   register: resourcegroup
+
+
+# - set_stats:
+#     data:
+#       ssh_keys: "{{ key.stdout }}"
+#   register: resourcegroup
+
