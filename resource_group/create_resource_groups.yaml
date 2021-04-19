@@ -23,3 +23,10 @@
         instance_name: "{{ item.key }}"
       loop: "{{ instances | dict2items }}"
       
+    - set_stats:
+        data:
+          resource_group_name: "{{ random_name }}"
+  
+      
+      
+      
