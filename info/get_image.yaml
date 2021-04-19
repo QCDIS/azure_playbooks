@@ -29,7 +29,7 @@
   when: "image_info_output_2['vmimages'] | length > 0 and not stat_result.stat.exists"
   
     
-- set_facts:
+- set_fact:
     publisher: Canonical
   when: os_distro == "Ubuntu"
 
