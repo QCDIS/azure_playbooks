@@ -1,12 +1,10 @@
 
-- azure_rm_resourcegroup:
-    name: "{{ random_resourcegroup_name }}"
-    location: "{{domain}}"
-    tags:
-      creator: sdia
-  register: resourcegroup_output
+- shell: jq -r '.key | { "{{ item.key }}":{ attributes:{ resourcegroup:name}' /tmp/resourcegroup_output.json
+  register: resourcegroup
 
 
-- debug:
-    var: resourcegroup_output
+- set_stats:
+    data:
+      ssh_keys: "{{ resourcegroup.stdout }}"
+  register: resourcegroup_stats_output
 
