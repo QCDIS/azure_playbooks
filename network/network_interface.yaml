@@ -24,11 +24,11 @@
 - shell: jq -r '.state' /tmp/virtualnetwork_subnet_publicipaddress_securitygroup_networkinterface.json
   register: networkinterface
  
-# - shell: jq -r '.state | {"{{ item.key }}":{attributes:{virtualnetwork:.name,networkinterface:"{{ resource_group_name }}"_"{{item.key}}",subnet:.name,securitygroup:.name,public_ip:.ip_address}}}' /tmp/virtualnetwork_subnet_publicipaddress_securitygroup_networkinterface.json
-#  register: networkinterface
+- shell: jq -r '.state | {"{{ item.key }}":{attributes:{virtualnetwork:.name,networkinterface:"{{ resource_group_name }}"_"{{item.key}}",subnet:.name,securitygroup:.name,public_ip:.ip_address}}}' /tmp/virtualnetwork_subnet_publicipaddress_securitygroup_networkinterface.json
+  register: networkinterface
 
 
 - set_stats:
    data:
      resourcegroup: "{{ networkinterface.stdout }}"
- register: networkinterface_stats_output
+   register: networkinterface_stats_output
