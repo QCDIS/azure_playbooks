@@ -8,7 +8,7 @@
     - azure_rm_virtualnetwork:
         resource_group: "{{ resource_group_name }}"
         name: "{{ resource_group_name }}"
-        address_prefixes: "172.0.0.0/16"
+        address_prefixes: "10.0.1.0/24"
       register: virtualnetwork_output
         
     - local_action: copy content={{ virtualnetwork_output }} dest=/tmp/virtualnetwork_output.json
@@ -16,7 +16,7 @@
     - azure_rm_subnet:
         resource_group: "{{ resource_group_name }}"
         name: "{{ resource_group_name }}"
-        address_prefix: "172.16.0.0/16"
+        address_prefix: "10.0.2.0/24"
         virtual_network: "{{ resource_group_name }}"
       register: subnet_output
         
@@ -63,9 +63,9 @@
 
     - azure_rm_networkinterface:
         resource_group:  "{{ resource_group_name }}"
-        name:  "{{ resource_group_name }}_ni"
+        name:  "{{ resource_group_name }}"
         virtual_network: "{{ resource_group_name }}"
-        subnet: "{{ resource_group_name }}_sn"
+        subnet: "{{ resource_group_name }}"
         public_ip_name: "{{ resource_group_name }}"
         security_group: "{{ resource_group_name }}"
       register: networkinterface_output
