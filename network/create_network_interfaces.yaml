@@ -14,8 +14,8 @@
     - local_action: copy content={{ virtualnetwork_output }} dest=/tmp/virtualnetwork_output.json
 
     - azure_rm_subnet:
-        resource_group: "{{ resource_group_name }}_sn"
-        name: "{{ resource_group_name }}"
+        resource_group: "{{ resource_group_name }}"
+        name: "{{ resource_group_name }}_sn"
         address_prefix: "172.16.0.0/24"
         virtual_network: "{{ resource_group_name }}_vn"
       register: subnet_output
