@@ -13,7 +13,7 @@
     - include_tasks: vm.yaml
         vars: 
           name: "{{ item.key }}"
-          resource_group_name: "{{item.value['resource_group_name']}}"
+          resource_group_name: "{{item.value['attributes']['resource_group_name']}}"
           flavor: "{{item.value['flavor_name']}}"
           user_name: "{{item.value['user_name']}}"
           network_interface_name: "{{item.value['network_interface_name']}}"
