@@ -6,7 +6,7 @@
     
     
     - azure_rm_virtualnetwork:
-        resource_group: "{{ resource_group_name }}"
+        resource_group: "{{ resource_group_name }}_vn"
         name: "{{ resource_group_name }}"
         address_prefixes: "172.0.0.0/16"
       register: virtualnetwork_output
@@ -14,17 +14,17 @@
     - local_action: copy content={{ virtualnetwork_output }} dest=/tmp/virtualnetwork_output.json
 
     - azure_rm_subnet:
-        resource_group: "{{ resource_group_name }}"
+        resource_group: "{{ resource_group_name }}_sn"
         name: "{{ resource_group_name }}"
         address_prefix: "172.16.0.0/24"
-        virtual_network: "{{ resource_group_name }}"
+        virtual_network: "{{ resource_group_name }}_vn"
       register: subnet_output
         
     - local_action: copy content={{ subnet_output }} dest=/tmp/subnet_output.json
 
     - azure_rm_publicipaddress:
         resource_group: "{{ resource_group_name }}"
-        name: "{{ resource_group_name }}"
+        name: "{{ resource_group_name }}_ip"
         allocation_method: Static
       register: publicipaddress_output
         
@@ -32,7 +32,7 @@
 
     - azure_rm_securitygroup:
         resource_group:  "{{ resource_group_name }}"
-        name:  "{{ resource_group_name }}"
+        name:  "{{ resource_group_name }}_sg"
         rules:
           - name: SSH
             protocol: Tcp
@@ -63,11 +63,11 @@
 
     - azure_rm_networkinterface:
         resource_group:  "{{ resource_group_name }}"
-        name:  "{{ resource_group_name }}"
-        virtual_network: "{{ resource_group_name }}"
-        subnet: "{{ resource_group_name }}"
-        public_ip_name: "{{ resource_group_name }}"
-        security_group: "{{ resource_group_name }}"
+        name:  "{{ resource_group_name }}_ni"
+        virtual_network: "{{ resource_group_name }}_vn"
+        subnet: "{{ resource_group_name }}_sn"
+        public_ip_name: "{{ resource_group_name }}_ip"
+        security_group: "{{ resource_group_name }}_sg"
       register: networkinterface_output
 
     - local_action: copy content={{ networkinterface_output }} dest=/tmp/networkinterface_output.json
