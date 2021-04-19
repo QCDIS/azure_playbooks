@@ -4,6 +4,7 @@
     ansible_python_interpreter: /usr/bin/python3
   tasks:
     
+    
     - azure_rm_virtualnetwork:
         resource_group: "{{ resource_group_name }}"
         name: "{{ resource_group_name }}"
@@ -57,10 +58,10 @@
             direction: Inbound
         register: securitygroup_output
         
-     - local_action: copy content={{ securitygroup_output }} dest=/tmp/securitygroup_output.json
+    - local_action: copy content={{ securitygroup_output }} dest=/tmp/securitygroup_output.json
 
 
-     - azure_rm_networkinterface:
+    - azure_rm_networkinterface:
         resource_group:  "{{ resource_group_name }}"
         name:  "{{ resource_group_name }}"
         virtual_network: "{{ resource_group_name }}"
@@ -69,10 +70,10 @@
         security_group: "{{ resource_group_name }}"
       register: networkinterface_output
 
-     - local_action: copy content={{ networkinterface_output }} dest=/tmp/networkinterface_output.json
+    - local_action: copy content={{ networkinterface_output }} dest=/tmp/networkinterface_output.json
 
-     - include_tasks: network_interface.yaml
-       vars:
+    - include_tasks: network_interface.yaml
+      vars:
         instance_name: "{{ item.key }}"
-       loop: "{{ instances | dict2items }}"
+      loop: "{{ instances | dict2items }}"
 
