@@ -8,7 +8,7 @@
     ssh_public_keys:
       - path: /home/azureuser/.ssh/authorized_keys
         key_data: <your-key-data>
-    network_interfaces: "{{network_interfaces}}"
+    network_interfaces: "{{network_interface_name}}"
       image:
         offer: "{{ os_distro }}"
         sku: "{{ os_version }}"
