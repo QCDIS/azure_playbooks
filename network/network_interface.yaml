@@ -10,7 +10,7 @@
 
 - azure_rm_networkinterface:
    resource_group:  "{{ resource_group_name }}"
-   name:  "{{ resource_group_name }}"
+   name:  "{{ resource_group_name }}_{{item.key}}"
    virtual_network: "{{ resource_group_name }}"
    subnet: "{{ resource_group_name }}"
    public_ip_name: "{{ resource_group_name }}"
