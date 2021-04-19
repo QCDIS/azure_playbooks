@@ -1,4 +1,13 @@
-- shell: jq -r '.state | {"{{ item.key }}":{attributes:{resourcegroup:.name}}}' /tmp/networkinterface_output.json
+ - shell: jq -s '.[0] * .[1]' /tmp/virtualnetwork_output.json /tmp/subnet_output.json > /tmp/virtualnetwork_subnet.json
+ 
+ - shell: jq -s '.[0] * .[1]' /tmp/virtualnetwork_subnet.json /tmp/publicipaddress_output.json > /tmp/virtualnetwork_subnet_publicipaddress.json
+ 
+ - shell: jq -s '.[0] * .[1]' /tmp/virtualnetwork_subnet_publicipaddress.json /tmp/securitygroup_output.json > /tmp/virtualnetwork_subnet_publicipaddress_securitygroup.json
+ 
+ - shell: jq -s '.[0] * .[1]' /tmp/virtualnetwork_subnet_publicipaddress_securitygroup.json /tmp/networkinterface_output.json > /tmp/virtualnetwork_subnet_publicipaddress_securitygroup_networkinterface.json
+
+
+- shell: jq -r '.state | {"{{ item.key }}":{attributes:{networkinterface:.name}}}' /tmp/virtualnetwork_subnet_publicipaddress_securitygroup_networkinterface.json
   register: networkinterface
 
 
