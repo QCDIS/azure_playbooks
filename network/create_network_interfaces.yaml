@@ -1,0 +1,28 @@
+
+- hosts: localhost
+  vars:
+    ansible_python_interpreter: /usr/bin/python3
+  tasks:
+  
+   - set_fact:
+      random_name: "sdia_{{ lookup('password', '/dev/null chars=ascii_lowercase,digits length=8') }}"
+        
+
+   - azure_rm_networkinterface:
+      resource_group:  "{{ resource_group_name }}"
+      name:  "{{ resource_group_name }}"
+      virtual_network: "{{ resource_group_name }}"
+      subnet: "{{ resource_group_name }}"
+      public_ip_name: "{{ resource_group_name }}"
+      security_group: "{{ resource_group_name }}"
+    register: networkinterface_output
+      
+      
+   - local_action: copy content={{ networkinterface_output }} dest=/tmp/networkinterface_output.json
+        
+ 
+   - include_tasks: network_interface.yaml
+     vars:
+      instance_name: "{{ item.key }}"
+     loop: "{{ instances | dict2items }}"
+
