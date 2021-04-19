@@ -1,5 +1,5 @@
 
-- shell: jq -r '.state | {"item":.name}}' /tmp/resourcegroup_output.json
+- shell: jq -r '.state | {"{{ item.key }}":.name}' /tmp/resourcegroup_output.json
   register: resourcegroup
 
 
