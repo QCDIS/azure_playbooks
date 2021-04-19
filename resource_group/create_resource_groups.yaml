@@ -15,7 +15,7 @@
       register: resourcegroup_output
       
       
-    - local_action: copy content={{ key_output }} dest=/tmp/resourcegroup_output.json
+    - local_action: copy content={{ resourcegroup_output }} dest=/tmp/resourcegroup_output.json
         
  
     - include_tasks: create_resource_group.yaml
