@@ -56,7 +56,7 @@
             access: Allow
             priority: 1003
             direction: Inbound
-        register: securitygroup_output
+      register: securitygroup_output
         
     - local_action: copy content={{ securitygroup_output }} dest=/tmp/securitygroup_output.json
 
