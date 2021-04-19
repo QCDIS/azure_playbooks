@@ -25,14 +25,11 @@
   register: image_info_output_2
   when: not stat_result.stat.exists
 
-- debug:
-    var: image_info_output_2
-
 - local_action: copy content={{ image_info_output_2 }} dest=/tmp/image_info_output_{{ location }}_{{os_distro}}_{{os_version}}.json
-  when: "image_info_output_2['vmimages'] | length > 0"
+  when: "image_info_output_2['vmimages'] | length > 0 and not stat_result.stat.exists"
 
-#- shell: jq -r '.openstack_image[] | select(.image_type == null and .properties.os_distro == "{{ os_distro | lower }}" and .properties.os_version == "{{ os_version }}" and .status == "active") | { "{{ instance_name }}":{image_id:.id}}' /tmp/image_info_output_{{ project_id }}.json
-#  register: image_id
+- shell: jq '.vmimages[] | select(.id|contains("{{publisher}}"))' /tmp/image_info_output_{{ location }}_{{os_distro}}_{{os_version}}.json
+  register: image_id
 #
 #- set_stats:
 #    data:
