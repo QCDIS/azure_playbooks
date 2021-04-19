@@ -35,11 +35,11 @@
 
 - shell: jq '.vmimages[] | select(.id|contains("{{publisher}}"))' /tmp/image_info_output_{{ location }}_{{os_distro}}_{{os_version}}.json
   register: image_id
-#
-#- set_stats:
-#    data:
-#      images: "{{ image_id.stdout }}"
-#  register: get_images_output
+
+- set_stats:
+   data:
+     images: "{{ image_id.stdout }}"
+ register: get_images_output
 #
 #- debug:
 #    var: get_images_output
