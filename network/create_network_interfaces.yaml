@@ -6,8 +6,8 @@
     
     
     - azure_rm_virtualnetwork:
-        resource_group: "{{ resource_group_name }}_vn"
-        name: "{{ resource_group_name }}"
+        resource_group: "{{ resource_group_name }}"
+        name: "{{ resource_group_name }}_vn"
         address_prefixes: "172.0.0.0/16"
       register: virtualnetwork_output
         
