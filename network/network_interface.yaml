@@ -10,7 +10,7 @@
    name:  "{{ resource_group_name }}_{{item.key}}"
    virtual_network: "{{ resource_group_name }}"
    subnet: "{{ resource_group_name }}"
-   public_ip_name: "{{ resource_group_name }}"
+   public_ip_name: "{{ resource_group_name }}_{{item.key}}"
    security_group: "{{ resource_group_name }}"
   register: networkinterface_output
 - local_action: copy content={{ networkinterface_output }} dest=/tmp/networkinterface_output{{item.key}}.json
