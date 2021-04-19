@@ -1,10 +1,10 @@
 
-- shell: jq -r '.state | {"{{ item.key }}":.name}' /tmp/resourcegroup_output.json
+- shell: jq -r '.state | {"{{ item.key }}":{attributes:{resourcegroup:.name}}}' /tmp/resourcegroup_output.json
   register: resourcegroup
 
 
 - set_stats:
     data:
-      ssh_keys: "{{ resourcegroup.stdout }}"
+      resourcegroup: "{{ resourcegroup.stdout }}"
   register: resourcegroup_stats_output
 
