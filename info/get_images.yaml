@@ -2,10 +2,10 @@
   vars:
   tasks:
 
+
     - include_tasks: get_image.yaml
       vars:
         os_distro: "{{ item.value.os_distro }}"
         os_version: "{{ item.value.os_version }}"
         location: "{{hostvars['localhost']['domain']}}"
-        publisher: "{{  publisher_name }}"
       loop: "{{ hostvars['localhost']['instances'] | dict2items }}"
