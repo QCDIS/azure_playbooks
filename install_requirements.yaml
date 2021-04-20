@@ -22,6 +22,6 @@
           - ansible-tower-cli
 #           - azure.mgmt
 
-   - shell: ansible-galaxy collection install azure.azcollection
+    - shell: ansible-galaxy collection install azure.azcollection
 
 
