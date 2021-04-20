@@ -58,6 +58,9 @@
           - azure-mgmt-iothub
           - azure-mgmt-recoveryservices
           - azure-mgmt-recoveryservicesbackup
+          - azure-cli-core
+          - azure-cli-nspkg
+          - azure-common
         state: forcereinstall
       register: pip_out 
       
