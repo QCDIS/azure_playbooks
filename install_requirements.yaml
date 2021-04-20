@@ -37,7 +37,6 @@
           - azure-mgmt-managedservices
           - azure-mgmt-network
           - azure-mgmt-nspkg
-          - azure-mgmt-privatedns
           - azure-mgmt-redis
           - azure-mgmt-resource
           - azure-mgmt-rdbms
@@ -61,6 +60,23 @@
           - azure-cli-core
           - azure-cli-nspkg
           - azure-common
+          - packaging
+          - requests[security]
+          - xmltodict
+          - azure-mgmt-authorization
+          - azure-mgmt-dns
+          - azure-mgmt-marketplaceordering 
+          - azure-mgmt-managementgroups
+          - azure-keyvault
+          - azure-graphrbac
+          - azure-mgmt-cosmosdb
+          - azure-mgmt-hdinsight
+          - azure-mgmt-devtestlabs
+          - azure-mgmt-loganalytics
+          - azure-mgmt-automation
+          - azure-mgmt-iothub
+          - azure-mgmt-recoveryservices
+          - azure-mgmt-recoveryservicesbackup
         state: forcereinstall
       register: pip_out 
       
