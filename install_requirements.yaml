@@ -21,7 +21,7 @@
           - msrest
           - ansible-tower-cli
           - azure-mgmt-managementgroups
-          - azure.mgmt
+          - azure-mgmt-compute
         state: forcereinstall
 
 
