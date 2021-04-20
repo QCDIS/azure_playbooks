@@ -23,6 +23,7 @@
           - azure-mgmt-managementgroups
           - azure-mgmt-compute
           - azure-mgmt-privatedns
+          - azure-mgmt-recoveryservicesbackup
         state: forcereinstall
 
 
