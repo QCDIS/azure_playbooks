@@ -22,6 +22,6 @@
           - ansible-tower-cli
 #           - azure.mgmt
 
-#    - shell: yes | curl -L https://aka.ms/InstallAzureCli | bash
+   - shell: ansible-galaxy collection install azure.azcollection
 
 
