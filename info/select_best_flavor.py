@@ -8,7 +8,7 @@ from numpy.linalg import norm
 
 
 def get_shorter_dist(available_instances, requested_instances):
-    flavors = available_instances['openstack_flavors']
+    flavors = available_instances
     selected_flavors = {}
     for requested_instance_name in requested_instances:
         min_dist = sys.maxsize
@@ -21,7 +21,7 @@ def get_shorter_dist(available_instances, requested_instances):
             dist = norm(requested_vector - available_vector)
             if dist < min_dist:
                 min_dist = dist
-                selected_flavor = {'flavor_id': flavor['id']}
+                selected_flavor = {'flavor_name': flavor['name']}
                 selected_flavors[requested_instance_name] = selected_flavor
 
     return selected_flavors
@@ -39,7 +39,7 @@ if __name__ == "__main__":
 
     selected_flavors = get_shorter_dist(available_instances, requested_instances)
     instances = {'selected_flavors':selected_flavors}
-    json.dumps(instances)
+    print(json.dumps(instances))
 #     fd, filename = tempfile.mkstemp()
 
 #     with os.fdopen(fd, 'w') as tmp:
