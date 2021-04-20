@@ -25,7 +25,7 @@
           - azure-mgmt-privatedns
           - azure-mgmt-recoveryservicesbackup
           - azure-mgmt-datalake-store
-          - azure-mgmt-authorization=
+          - azure-mgmt-authorization
           - azure-mgmt-batch
           - azure-mgmt-cdn
           - azure-mgmt-containerinstance
