@@ -19,6 +19,7 @@
         name:
           - ansible[azure]
           - msrest
+          - numpy 
           - ansible-tower-cli
           
 #           - azure-cli-core
