@@ -23,12 +23,7 @@
     - stat:
         path: /tmp/flavor_info_output_{{region}}.json
       register: stat_result
-      
-    - include_vars:
-        file: /tmp/flavor_info_output_{{region}}.json
-        name: flavor_info_output_cache
-      when: stat_result.stat.exists
-          
+                
     - shell: python "{{ playbook_dir }}"/list_vms.py "{{hostvars['localhost']['credentials'][0]['user']}}" "{{hostvars['localhost']['credentials'][0]['token']}}" "{{hostvars['localhost']['credentials'][0]['extra_properties']['subscription_id']}}" "{{hostvars['localhost']['credentials'][0]['extra_properties']['tenant']}}" "{{region}}" > /tmp/flavor_info_output_{{region}}.json
       register: flavors_output
       when: not stat_result.stat.exists
@@ -36,7 +31,6 @@
     - shell: python "{{ playbook_dir }}"/select_best_flavor.py /tmp/flavor_info_output_{{region}}.json /tmp/request_instances.json > /tmp/selected_flavors_{{region}}.json
       register: select_best_flavors_output
       
-
     - include_vars:
         file: /tmp/selected_flavors_{{region}}.json
         name: selected_flavors
