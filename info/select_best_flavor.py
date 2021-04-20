@@ -39,10 +39,10 @@ if __name__ == "__main__":
 
     selected_flavors = get_shorter_dist(available_instances, requested_instances)
     instances = {'selected_flavors':selected_flavors}
+    json.dumps(instances)
+#     fd, filename = tempfile.mkstemp()
 
-    fd, filename = tempfile.mkstemp()
-
-    with os.fdopen(fd, 'w') as tmp:
-        # do stuff with temp file
-        json.dump(instances, tmp)
-    print(filename)
+#     with os.fdopen(fd, 'w') as tmp:
+#         # do stuff with temp file
+#         json.dump(instances, tmp)
+#     print(filename)
