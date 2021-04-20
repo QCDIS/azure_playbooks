@@ -9,21 +9,24 @@
       azure_rm_image_info:
       register: instance_size_output
 
-
-
-
-
     - debug:
         var: instance_size_output
-
-
-
-    - shell: /var/lib/awx/bin/az vm list-skus
-      register: instance_size_output
-
-
-
-
+        
+    - name: Get facts for one subscription by id
+      azure_rm_subscription_info:
+        id: "{{hostvars['localhost']['credentials'][0]['extra_properties']['subscription_id']}}"
+      register: subscription_info_output
 
     - debug:
-        var: instance_size_output
+        var: subscription_info_output
+        
+
+#     - shell: /var/lib/awx/bin/az vm list-skus
+#       register: instance_size_output
+
+
+
+
+
+#     - debug:
+#         var: instance_size_output
