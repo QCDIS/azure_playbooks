@@ -22,6 +22,7 @@
           - ansible-tower-cli
           - azure-mgmt-managementgroups
           - azure-mgmt-compute
+          - azure-mgmt-privatedns
         state: forcereinstall
 
 
