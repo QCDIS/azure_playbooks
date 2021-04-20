@@ -78,12 +78,16 @@
           - azure-mgmt-recoveryservices
           - azure-mgmt-recoveryservicesbackup
         state: forcereinstall
-      register: pip_out 
+
       
-    - debug:
-        var: pip_out
+
 
 
     - shell: ansible-galaxy collection install azure.azcollection
+      register: galaxy_out 
+    
+    - debug:
+        var: galaxy_out
+        
 
 
