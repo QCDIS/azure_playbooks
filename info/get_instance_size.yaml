@@ -13,7 +13,7 @@
         var: instance_size_output
         
     - name: Get facts for one subscription by id
-      azure_rm_subscription_info:
+      azure.azcollection.azure_rm_subscription_info:
         id: "{{hostvars['localhost']['credentials'][0]['extra_properties']['subscription_id']}}"
       register: subscription_info_output
 
