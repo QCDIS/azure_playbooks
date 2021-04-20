@@ -8,6 +8,7 @@
         - jq
         - gcc
         - python3-devel
+        - azure-cli 
         state: present
 #      become: yes
 
@@ -77,11 +78,7 @@
           - azure-mgmt-iothub
           - azure-mgmt-recoveryservices
           - azure-mgmt-recoveryservicesbackup
-          - azure-cli 
         state: forcereinstall
-
-      
-
 
 
     - shell: ansible-galaxy collection install azure.azcollection
