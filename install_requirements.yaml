@@ -31,7 +31,6 @@
           - azure-mgmt-containerinstance
           - azure-mgmt-containerregistry
           - azure-mgmt-containerservice
-          - azure-mgmt-dn
           - azure-mgmt-keyvault
           - azure-mgmt-marketplaceordering
           - azure-mgmt-monitor
