@@ -83,7 +83,7 @@
     - shell: ansible-galaxy collection install azure.azcollection
 
       
-    - shell: pip3 install azure-cli
+    - shell: pip3 install azure-cli azure-mgmt-monitor
       register: galaxy_out 
       
     - debug:
