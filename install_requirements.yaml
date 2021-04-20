@@ -8,7 +8,6 @@
         - jq
         - gcc
         - python3-devel
-        - azure-cli 
         state: present
 #      become: yes
 
@@ -21,6 +20,17 @@
           - ansible[azure]
           - msrest
           - ansible-tower-cli
+          - azure-cli-core
+          - azure-cli-nspkg
+          - azure-common
+          - packaging
+          - requests[security]
+          - azure-nspkg
+          - azure-storage  
+          - msrestazure
+          - azure-keyvault
+          - azure-graphrbac
+          - xmltodict
           - azure-mgmt-managementgroups
           - azure-mgmt-compute
           - azure-mgmt-privatedns
@@ -47,9 +57,6 @@
           - azure-mgmt-storage
           - azure-mgmt-trafficmanager
           - azure-mgmt-web
-          - azure-nspkg
-          - azure-storage  
-          - msrestazure
           - azure-mgmt-cosmosdb
           - azure-mgmt-hdinsight
           - azure-mgmt-devtestlabs
@@ -58,18 +65,10 @@
           - azure-mgmt-iothub
           - azure-mgmt-recoveryservices
           - azure-mgmt-recoveryservicesbackup
-          - azure-cli-core
-          - azure-cli-nspkg
-          - azure-common
-          - packaging
-          - requests[security]
-          - xmltodict
           - azure-mgmt-authorization
           - azure-mgmt-dns
           - azure-mgmt-marketplaceordering 
           - azure-mgmt-managementgroups
-          - azure-keyvault
-          - azure-graphrbac
           - azure-mgmt-cosmosdb
           - azure-mgmt-hdinsight
           - azure-mgmt-devtestlabs
@@ -82,8 +81,11 @@
 
 
     - shell: ansible-galaxy collection install azure.azcollection
+
+      
+    - shell: pip3 install azure-cli
       register: galaxy_out 
-    
+      
     - debug:
         var: galaxy_out
         
