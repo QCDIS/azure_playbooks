@@ -21,7 +21,7 @@
           - msrest
           - ansible-tower-cli
           - azure-mgmt-managementgroups
-#           - azure.mgmt
+          - azure.mgmt
 
     - shell: ansible-galaxy collection install azure.azcollection
 
