@@ -6,28 +6,9 @@
     ansible_python_interpreter: /usr/bin/python3
 
   tasks:
-    - name: List all available images under current subscription
-      azure_rm_image_info:
-      register: instance_size_output
-
+    
+    - shell: python "{{ playbook_dir }}"/list_vms.py "{{hostvars['localhost']['credentials'][0]['user']}}" "{{hostvars['localhost']['credentials'][0]['token']}}" "{{hostvars['localhost']['credentials'][0]['extra_properties']['subscription_id']}}" "{{hostvars['localhost']['credentials'][0]['extra_properties']['tenant']}}" "{{region}}"
+      register: flavors_output
+ 
     - debug:
-        var: instance_size_output
-        
-
-    - azure_rm_subscription_info:
-        id: "{{hostvars['localhost']['credentials'][0]['extra_properties']['subscription_id']}}"
-      register: subscription_info_output
-
-    - debug:
-        var: subscription_info_output
-        
-
-#     - shell: /var/lib/awx/bin/az vm list-skus
-#       register: instance_size_output
-
-
-
-
-
-#     - debug:
-#         var: instance_size_output
+        var: flavors_output
