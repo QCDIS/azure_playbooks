@@ -58,7 +58,11 @@
           - azure-mgmt-iothub
           - azure-mgmt-recoveryservices
           - azure-mgmt-recoveryservicesbackup
-#         state: forcereinstall
+        state: forcereinstall
+      register: pip_out 
+      
+    - debug:
+        var: pip_out
 
 
     - shell: ansible-galaxy collection install azure.azcollection
