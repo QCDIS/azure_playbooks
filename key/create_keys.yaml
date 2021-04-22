@@ -1,0 +1,21 @@
+
+- hosts: localhost
+  collections:
+    - awx.awx
+  vars:
+    ansible_python_interpreter: /usr/bin/python3
+
+  tasks:
+    - set_fact:
+        random_name: "sdia_{{ lookup('password', '/dev/null chars=ascii_lowercase,digits length=8') }}"
+
+    - openssh_keypair:
+        path: /tmp/{{random_name}}
+        type: rsa
+        size: 4096
+        state: present
+        force: no
+      register: ssh_key_output
+
+    - debug:
+        var: ssh_key_output
