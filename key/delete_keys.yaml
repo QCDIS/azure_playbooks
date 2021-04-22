@@ -1,0 +1,16 @@
+
+
+- hosts: localhost
+  collections:
+    - awx.awx
+  vars:
+    ansible_python_interpreter: /usr/bin/python3
+
+  tasks:
+    - openssh_keypair:
+        path: {{path}}
+        type: rsa
+        size: 4096
+        state: absent
+        force: no
+      register: ssh_key_output
