@@ -19,7 +19,7 @@
 
 - set_stats:
     data:
-      ssh_keys: "{{ key.stdout }}"
+      ssh_keys: "{{ key }}"
   register: key_stats_output
 
 - debug:
