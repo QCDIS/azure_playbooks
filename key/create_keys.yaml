@@ -17,5 +17,8 @@
         force: no
       register: ssh_key_output
 
-    - debug:
-        var: ssh_key_output
+    - include_tasks: create_key.yaml
+      vars:
+        instance_name: "{{ item.key }}"
+        key_path: /tmp/{{random_name}}
+      loop: "{{ instances | dict2items }}"

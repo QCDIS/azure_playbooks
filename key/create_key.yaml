@@ -1,0 +1,27 @@
+
+
+- shell: cat "{{key_path}}" | base64 |tr -d '\n'
+  register: private_key_base64
+
+- shell: cat "{{key_path}}".pub | base64 |tr -d '\n'
+  register: public_key_base64
+
+- set_fact:
+    "{{ item.key }}":
+      attributes:
+        user_key_pair:
+          protocol: ssh
+            keys:
+              - private_key: "{{private_key_base64.stdout}}"
+                public_key:  "{{public_key_base64.stdout}}"
+  register: key
+
+
+- set_stats:
+    data:
+      ssh_keys: "{{ key.stdout }}"
+  register: key_stats_output
+
+- debug:
+    var: key_stats_output
+
