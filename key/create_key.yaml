@@ -19,9 +19,8 @@
 
 - set_stats:
     data:
-      ssh_keys: "{{ key }}"
+      ssh_keys: "{{ key.ansible_facts }}"
   register: key_stats_output
 
 - debug:
     var: key_stats_output
-
