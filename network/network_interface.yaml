@@ -21,7 +21,7 @@
 
 - shell: jq -s '.[0] * .[1]' /tmp/publicipaddress_output_{{item.key}}.json /tmp/virtualnetwork_subnet_securitygroup.json > /tmp/virtualnetwork_subnet_securitygroup_publicipaddress.json
  
-- shell: jq -r '.state | {"{{ item.key }}":{attributes:{virtualnetwork:.name,networkinterface:.name,subnet:.name,securitygroup:.name,public_ip:.ip_address}}}' /tmp/virtualnetwork_subnet_securitygroup.json
+- shell: jq -r '.state | {"{{ item.key }}":{attributes:{virtualnetwork:.name,networkinterface:.name,subnet:.name,securitygroup:.name,public_ip:.ip_address}}}' /tmp/virtualnetwork_subnet_securitygroup_publicipaddress.json
   register: networkinterface
 
 - set_stats:
