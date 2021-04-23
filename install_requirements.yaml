@@ -18,8 +18,8 @@
     - pip:
         name:
           - ansible[azure]
-#           - msrest
-#           - numpy 
+          - msrest
+          - numpy 
 #           - ansible-tower-cli
 #           - azure-cli-core
 #           - azure-cli-nspkg
