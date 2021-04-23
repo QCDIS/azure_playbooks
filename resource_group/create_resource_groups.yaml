@@ -9,7 +9,7 @@
 
     - azure_rm_resourcegroup:
         name: "{{random_name}}"
-        location: "{{domain}}"
+        location: "{{region}}"
         tags:
           creator: sdia
       register: resourcegroup_output
