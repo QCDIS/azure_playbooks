@@ -6,6 +6,24 @@
 
   tasks:  
   
+  
+  
+    - local_action: copy content={{ item.value }} dest=/tmp/{{ item.name }}.json
+      with_items:
+        - { name: images, value: "{{ images }}" }
+        - { name: selected_flavors, value: "{{ selected_flavors }}" }
+        - { name: networks, value: "{{ networks }}" }
+        - { name: ssh_keys, value: "{{ ssh_keys }}" }
+        - { name: resourcegroup, value: "{{ resourcegroup }}" }
+        
+
+    - shell: jq -s '.[0] * .[1]' /tmp/images.json /tmp/networks.json > /tmp/images_networks.json
+
+    - shell: jq -s '.[0] * .[1]' /tmp/images_networks.json /tmp/ssh_keys.json > /tmp/images_networks_ssh_keys.json
+
+    - shell: jq -s '.[0] * .[1]' /tmp/images_networks_ssh_keys.json  /tmp/selected_flavors.json > /tmp/vms.json
+    
+  
     - include_vars:
         file: /tmp/vms.json
         name: vms
