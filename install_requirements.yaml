@@ -18,10 +18,9 @@
     - pip:
         name:
           - ansible[azure]
-          - msrest
-          - numpy 
-          - ansible-tower-cli
-          
+#           - msrest
+#           - numpy 
+#           - ansible-tower-cli
 #           - azure-cli-core
 #           - azure-cli-nspkg
 #           - azure-common
@@ -46,7 +45,7 @@
 #           - azure-mgmt-containerservice
 #           - azure-mgmt-keyvault
 #           - azure-mgmt-marketplaceordering
-          - azure-mgmt-monitor
+#           - azure-mgmt-monitor
 #           - azure-mgmt-managedservices
 #           - azure-mgmt-network
 #           - azure-mgmt-nspkg
