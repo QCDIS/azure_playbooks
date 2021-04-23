@@ -39,7 +39,7 @@
 - set_stats:
    data:
      images: "{{ image_id.stdout }}"
- register: get_images_output
+  register: get_images_output
 #
 #- debug:
 #    var: get_images_output
