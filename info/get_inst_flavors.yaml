@@ -24,7 +24,7 @@
         path: /tmp/flavor_info_output_{{region}}.json
       register: stat_result
                 
-    - shell: python "{{ playbook_dir }}"/list_vms.py "{{hostvars['localhost']['credentials'][0]['user']}}" "{{hostvars['localhost']['credentials'][0]['token']}}" "{{hostvars['localhost']['credentials'][0]['extra_properties']['subscription_id']}}" "{{hostvars['localhost']['credentials'][0]['extra_properties']['tenant']}}" "{{region}}" > /tmp/flavor_info_output_{{region}}.json
+    - shell: python "{{ playbook_dir }}"/list_vms.py {{hostvars['localhost']['credentials'][0]['user']}} {{hostvars['localhost']['credentials'][0]['token']}} {{hostvars['localhost']['credentials'][0]['extra_properties']['subscription_id']}} {{hostvars['localhost']['credentials'][0]['extra_properties']['tenant']}} {{region}} > /tmp/flavor_info_output_{{region}}.json
       register: flavors_output
       when: not stat_result.stat.exists
 
