@@ -33,7 +33,7 @@
     publisher: Canonical
   when: os_distro == "Ubuntu"
 
-- shell: jq '.vmimages[] | select(.id|contains("{{publisher}}"))' /tmp/image_info_output_{{ location }}_{{os_distro}}_{{os_version}}.json
+- shell: jq '.vmimages[] | select(.id|contains("{{publisher}}")) |{"{{ item.key }}":{attributes:{image:{publisher_name:.name,id:.id}}}}' /tmp/image_info_output_{{ location }}_{{os_distro}}_{{os_version}}.json
   register: image_id
 
 - set_stats:
