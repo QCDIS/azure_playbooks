@@ -8,10 +8,13 @@
     ssh_public_keys:
       - path: /home/{{ user_name}}/.ssh/authorized_keys
         key_data: "{{public_key}}"
-    network_interfaces: "{{network_interface_name}}"
+    network_interface_names: "{{network_interface_name}}"
+    virtual_network_name: "{{ resource_group_name }}"
     image:
         offer: "{{ os_distro }}"
         sku: "{{ os_version }}"
         version: latest
         publisher: "{{publisher_name}}"
     register: vm_output
+
+
