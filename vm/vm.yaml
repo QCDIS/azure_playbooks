@@ -4,15 +4,15 @@
     admin_username: "{{ user_name}}"
     ssh_password_enabled: false
     image:
-      offer: CentOS
-      publisher: OpenLogic
-      sku: '7.1'
+      offer: "{{ os_distro }}"
+      publisher: "{{publisher_name}}"
+      sku: "{{ os_version }}"
       version: latest
     ssh_public_keys:
       - path: /home/{{ user_name}}/.ssh/authorized_keys
         key_data: "{{public_key}}"
     vm_size: "{{flavor}}"
-    register: vm_output
+  register: vm_output
       
 
 
