@@ -26,5 +26,5 @@
 
 - set_stats:
    data:
-     resourcegroup: "{{ networkinterface.stdout }}"
+     networks: "{{ networkinterface.stdout }}"
   register: networkinterface_stats_output
