@@ -4,9 +4,9 @@
     admin_username: "{{ user_name}}"
     ssh_password_enabled: false
     image:
-      offer: "{{ os_distro }}"
-      publisher: "{{publisher_name}}"
-      sku: "{{ os_version }}"
+      offer: CentOS
+      publisher: OpenLogic
+      sku: 7.1
       version: latest
     ssh_public_keys:
       - path: /home/{{ user_name}}/.ssh/authorized_keys
