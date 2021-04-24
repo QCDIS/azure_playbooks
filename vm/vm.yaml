@@ -1,5 +1,17 @@
-
 - azure_rm_virtualmachine:
+    resource_group: "{{ resource_group_name }}"
+    name: testvm10
+    admin_username: vm_user
+    ssh_password_enabled: false
+    image:
+      offer: CentOS
+      publisher: OpenLogic
+      sku: '7.1'
+      version: latest
+      
+
+
+# - azure_rm_virtualmachine:
 #     resource_group: "{{ resource_group_name }}"
 #     name: "{{ name }}"
 #     vm_size: "{{ flavor }}"
@@ -15,6 +27,6 @@
 #         sku: "{{ os_version }}"
 #         version: latest
 #         publisher: "{{publisher_name}}"
-    register: vm_output
+#     register: vm_output
 
 
