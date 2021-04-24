@@ -11,13 +11,14 @@
     ssh_public_keys:
       - path: /home/{{ user_name}}/.ssh/authorized_keys
         key_data: "{{public_key}}"
+    vm_size: Standard_B1ms
       
 
 
 # - azure_rm_virtualmachine:
 #     resource_group: "{{ resource_group_name }}"
-#     name: "{{ name }}"
-#     vm_size: "{{ flavor }}"
+#     name: "{{ vm_name }}"
+#     vm_size: 
 #     admin_username: "{{ user_name}}"
 #     ssh_password_enabled: false
 #     ssh_public_keys:
