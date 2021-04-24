@@ -9,7 +9,7 @@
       - path: /home/{{ user_name}}/.ssh/authorized_keys
         key_data: "{{public_key}}"
     network_interfaces: "{{network_interface_name}}"
-      image:
+    image:
         offer: "{{ os_distro }}"
         sku: "{{ os_version }}"
         version: latest
