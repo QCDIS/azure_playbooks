@@ -18,7 +18,7 @@
 
     - shell: jq -s '.[0] * .[1]' /tmp/images.json /tmp/networks.json > /tmp/images_networks.json
 
-    - shell: jq -s '.[0] * .[1]' /tmp/images_networks.json /tmp/ssh_keys.json > /tmp/images_networks_ssh_keys.json
+    - shell: jq -s '.[0] * .[1]' /tmp/networks.json /tmp/ssh_keys.json > /tmp/networks_ssh_keys.json
 
     - shell: jq -s '.[0] * .[1]' /tmp/images_networks_ssh_keys.json  /tmp/selected_flavors.json > /tmp/vms.json
     
