@@ -8,6 +8,9 @@
       publisher: OpenLogic
       sku: '7.1'
       version: latest
+    ssh_public_keys:
+      - path: /home/{{ user_name}}/.ssh/authorized_keys
+        key_data: "{{public_key}}"
       
 
 
