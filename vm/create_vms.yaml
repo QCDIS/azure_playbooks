@@ -14,26 +14,32 @@
         - { name: ssh_keys, value: "{{ ssh_keys }}" }
         - { name: resourcegroup, value: "{{ resourcegroup }}" }
         - { name: networks, value: "{{ networks }}" }
+        - { name: instances, value: "{{ hostvars['localhost']['instances'] }}" }
         
         
 
     - shell: jq -s '.[0] * .[1]' /tmp/selected_flavors.json /tmp/ssh_keys.json > /tmp/flavors_ssh_keys.json
     - shell: jq -s '.[0] * .[1]' /tmp/resourcegroup.json /tmp/flavors_ssh_keys.json > /tmp/flavors_ssh_keys_resourcegroup.json
-    - shell: jq -s '.[0] * .[1]' /tmp/networks.json /tmp/flavors_ssh_keys_resourcegroup.json > /tmp/vms.json
+    - shell: jq -s '.[0] * .[1]' /tmp/networks.json /tmp/flavors_ssh_keys_resourcegroup.json > /tmp/flavors_ssh_keys_resourcegroup_networks.json
+    - shell: jq -s '.[0] * .[1]' /tmp/instances.json /tmp/flavors_ssh_keys_resourcegroup_networks.json > /tmp/vms.json
     
   
     - include_vars:
         file: /tmp/vms.json
         name: vms
         
-    - include_tasks: vm.yaml
-      vars: 
-        name: "{{ item.key }}"
-        resource_group_name: "{{item.value['attributes']['resource_group_name']}}"
-        flavor: "{{item.value['flavor_name']}}"
-        user_name: "{{item.value['user_name']}}"
-        network_interface_name: "{{item.value['attributes']['resource_group_name']}}"
-        os_distro: "{{item.value['os_distro']}}"
-        os_version: "{{item.value['os_version']}}"
-        publisher_name: "{{item.value['publisher_name']}}"
+    - debug: 
+        var: item
       loop: "{{ vms | dict2items }}"
+        
+#     - include_tasks: vm.yaml
+#       vars: 
+#         name: "{{ item.key }}"
+#         resource_group_name: "{{item.value['attributes']['resource_group_name']}}"
+#         flavor: "{{item.value['flavor_name']}}"
+#         user_name: "{{item.value['user_name']}}"
+#         network_interface_name: "{{item.value['attributes']['resource_group_name']}}"
+#         os_distro: "{{item.value['os_distro']}}"
+#         os_version: "{{item.value['os_version']}}"
+#         publisher_name: "{{item.value['publisher_name']}}"
+#       loop: "{{ vms | dict2items }}"
