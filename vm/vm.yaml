@@ -4,14 +4,16 @@
     admin_username: "{{ user_name}}"
     ssh_password_enabled: false
     image:
-      offer: CentOS
+      offer: "{{ os_distro }}"
       publisher: OpenLogic
-      sku: '7.1'
+      sku: "{{ os_version }}"
       version: latest
     ssh_public_keys:
       - path: /home/{{ user_name}}/.ssh/authorized_keys
         key_data: "{{public_key}}"
-    vm_size: Standard_B1ms
+    vm_size: "{{flavor}}"
+    network_interface_names: "{{network_interface_name}}"
+    register: vm_output
       
 
 
