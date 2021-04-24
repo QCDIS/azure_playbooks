@@ -36,7 +36,7 @@
         
     - include_tasks: vm.yaml
       vars: 
-        name: "{{ item.key }}"
+        vm_name: "{{ item.key }}"
         resource_group_name: "{{item.value['attributes']['resourcegroup']}}"
         flavor: "{{item.value['flavor_name']}}"
         user_name: "{{item.value['user_name']}}"
@@ -44,5 +44,5 @@
         os_distro: "{{item.value['os_distro']}}"
         os_version: "{{item.value['os_version']}}"
         publisher_name: "{{item.value['attributes']['image']['publisher_name']}}"
-        public_key: "{{item.value['attributes']['user_key_pair']['keys']['public_key']}}"
+        public_key: "{{ item.value['attributes']['user_key_pair']['keys']['public_key'] | b64decode }}"
       loop: "{{ vms | dict2items }}"
