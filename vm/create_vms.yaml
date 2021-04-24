@@ -11,7 +11,6 @@
     - local_action: copy content={{ item.value }} dest=/tmp/{{ item.name }}.json
       with_items:
         - { name: selected_flavors, value: "{{ selected_flavors }}" }
-        - { name: networks, value: "{{ networks }}" }
         - { name: ssh_keys, value: "{{ ssh_keys }}" }
         - { name: resourcegroup, value: "{{ resourcegroup }}" }
         
