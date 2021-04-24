@@ -1,7 +1,7 @@
 - azure_rm_virtualmachine:
     resource_group: "{{ resource_group_name }}"
-    name: testvm10
-    admin_username: vm_user
+    name: "{{ vm_name }}"
+    admin_username: "{{ user_name}}"
     ssh_password_enabled: false
     image:
       offer: CentOS
