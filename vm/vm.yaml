@@ -1,8 +1,8 @@
 
 - azure_rm_virtualmachine:
-    resource_group: "{{ resource_group_name }}"
-    name: "{{ name }}"
-    vm_size: "{{ flavor }}"
+#     resource_group: "{{ resource_group_name }}"
+#     name: "{{ name }}"
+#     vm_size: "{{ flavor }}"
 #     admin_username: "{{ user_name}}"
 #     ssh_password_enabled: false
 #     ssh_public_keys:
