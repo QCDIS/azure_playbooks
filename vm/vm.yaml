@@ -5,14 +5,13 @@
     ssh_password_enabled: false
     image:
       offer: "{{ os_distro }}"
-      publisher: OpenLogic
+      publisher: "{{publisher_name}}"
       sku: "{{ os_version }}"
       version: latest
     ssh_public_keys:
       - path: /home/{{ user_name}}/.ssh/authorized_keys
         key_data: "{{public_key}}"
     vm_size: "{{flavor}}"
-    network_interface_names: "{{network_interface_name}}"
     register: vm_output
       
 
