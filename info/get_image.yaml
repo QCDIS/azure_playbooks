@@ -1,6 +1,6 @@
 - find:
     paths: /tmp/
-    patterns: "image_info_output_{{ location }}_{{os_distro}}_{{os_version}}.json"
+    patterns: "image_info_output_{{ location }}.json"
     age: 10d
   register: older_files
 
@@ -10,30 +10,37 @@
   with_items: "{{ older_files.files }}"
 
 - stat:
-    path: /tmp/image_info_output_{{ location }}_{{os_distro}}_{{os_version}}.json
+    path: /tmp/image_info_output_{{ location }}.json
   register: stat_result
 
 - include_vars:
-    file: /tmp/image_info_output_{{ location }}_{{os_distro}}_{{os_version}}.json
+    file: /tmp/image_info_output_{{ location }}.json
     name: image_info_output_cache
   when: stat_result.stat.exists
+  
+# - set_fact:
+#     publisher: Canonical
+#   when: os_distro == "Ubuntu"
+  
+# - set_fact:
+#     offer_name: UbuntuServer
+#   when: os_distro == "Ubuntu"
+    
 
 - azure_rm_virtualmachineimage_info:
     location: "{{location}}"
-    offer: "{{os_distro}}"
-    sku: "{{os_version}}"
+#     offer: "{{os_distro}}"
+#     sku: "{{os_version}}"
   register: image_info_output_2
   when: not stat_result.stat.exists
 
-- local_action: copy content={{ image_info_output_2 }} dest=/tmp/image_info_output_{{ location }}_{{os_distro}}_{{os_version}}.json
+- local_action: copy content={{ image_info_output_2 }} dest=/tmp/image_info_output_{{ location }}.json
   when: not stat_result.stat.exists
   
     
-- set_fact:
-    publisher: Canonical
-  when: os_distro == "Ubuntu"
 
-- shell: jq '.vmimages[] | select(.id|contains("{{publisher}}")) |{"{{ item.key }}":{attributes:{image:{publisher_name:.name,id:.id}}}}' /tmp/image_info_output_{{ location }}_{{os_distro}}_{{os_version}}.json
+
+- shell: jq '.vmimages[] | select(.id|contains("{{publisher}}")) |{"{{ item.key }}":{attributes:{image:{publisher_name:.name,id:.id}}}}' /tmp/image_info_output_{{ location }}.json
   register: image_id
 
 - set_stats:
