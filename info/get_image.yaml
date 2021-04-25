@@ -29,7 +29,7 @@
 
 - azure_rm_virtualmachineimage_info:
     location: "{{location}}"
-#     offer: "{{os_distro}}"
+    offer: UbuntuServer #"{{os_distro}}"
 #     sku: "{{os_version}}"
   register: image_info_output_2
   when: not stat_result.stat.exists
