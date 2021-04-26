@@ -1,16 +1,24 @@
 - set_fact:
-    os_distro: UbuntuServer
+    updated_os_distro: UbuntuServer
   when: os_distro == "Ubuntu"
   
 - set_fact:
-    os_version: 18.04-LTS
+    updated_os_distro: "{{os_distro}}"
+  when: os_distro != "Ubuntu"
+  
+- set_fact:
+    updated_os_version: 18.04-LTS
   when: os_version == "18.04"
   
+- set_fact:
+    updated_os_version: "{{os_version}}"
+  when: os_version != "18.04"
+  
 - debug:
-    var: os_distro
+    var: updated_os_distro
     
 - debug:
-    var: os_version
+    var: updated_os_version
 
 - azure_rm_virtualmachine:
     resource_group: "{{ resource_group_name }}"
