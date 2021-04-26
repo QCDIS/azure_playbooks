@@ -13,13 +13,13 @@
         
     - local_action: copy content={{ virtualnetwork_output }} dest=/tmp/virtualnetwork_output.json
 
-#     - azure_rm_subnet:
-#         resource_group: "{{ resource_group_name }}"
-#         name: "{{ resource_group_name }}"
-#         address_prefix: "10.0.1.0/24"
-#         virtual_network: "{{ resource_group_name }}"
-#       register: subnet_output
-#     - local_action: copy content={{ subnet_output }} dest=/tmp/subnet_output.json
+    - azure_rm_subnet:
+        resource_group: "{{ resource_group_name }}"
+        name: "{{ resource_group_name }}"
+        address_prefix: "10.0.1.0/24"
+        virtual_network: "{{ resource_group_name }}"
+      register: subnet_output
+    - local_action: copy content={{ subnet_output }} dest=/tmp/subnet_output.json
 
 #     - azure_rm_securitygroup:
 #         resource_group:  "{{ resource_group_name }}"
