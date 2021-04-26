@@ -45,4 +45,10 @@
       
 - debug:
     var: vm_output
+    
+- local_action: copy content={{ vm_output }} dest=/tmp/vm_output.json
+
+- shell: jq '.openstack | {"{{ item.key }}":{attributes:{public_ip:.accessIPv4 }}}' /tmp/vm_output.json
+  register: vm_ip
+  
      
