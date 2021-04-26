@@ -50,8 +50,8 @@
 #       register: securitygroup_output
 #     - local_action: copy content={{ securitygroup_output }} dest=/tmp/securitygroup_output.json
 
-#     - include_tasks: network_interface.yaml
-#       vars:
-#         instance_name: "{{ item.key }}"
-#       loop: "{{ instances | dict2items }}"
+    - include_tasks: network_interface.yaml
+      vars:
+        instance_name: "{{ item.key }}"
+      loop: "{{ instances | dict2items }}"
 
