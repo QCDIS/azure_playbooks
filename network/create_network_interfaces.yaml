@@ -21,35 +21,34 @@
 #       register: subnet_output
 #     - local_action: copy content={{ subnet_output }} dest=/tmp/subnet_output.json
 
-    - azure_rm_securitygroup:
-        resource_group:  "{{ resource_group_name }}"
-        name:  "{{ resource_group_name }}"
-        rules:
-          - name: SSH
-            protocol: Tcp
-            destination_port_range: 22
-            access: Allow
-            priority: 1001
-            direction: Inbound
-          - name: http
-            protocol: Tcp
-            destination_port_range:
-              - 80
-              - 443
-              - 8080
-              - 6443
-            access: Allow
-            priority: 1002
-            direction: Inbound
-          - name: k8s
-            protocol: Tcp
-            destination_port_range: 30000-32767
-            access: Allow
-            priority: 1003
-            direction: Inbound
-      register: securitygroup_output
-        
-    - local_action: copy content={{ securitygroup_output }} dest=/tmp/securitygroup_output.json
+#     - azure_rm_securitygroup:
+#         resource_group:  "{{ resource_group_name }}"
+#         name:  "{{ resource_group_name }}"
+#         rules:
+#           - name: SSH
+#             protocol: Tcp
+#             destination_port_range: 22
+#             access: Allow
+#             priority: 1001
+#             direction: Inbound
+#           - name: http
+#             protocol: Tcp
+#             destination_port_range:
+#               - 80
+#               - 443
+#               - 8080
+#               - 6443
+#             access: Allow
+#             priority: 1002
+#             direction: Inbound
+#           - name: k8s
+#             protocol: Tcp
+#             destination_port_range: 30000-32767
+#             access: Allow
+#             priority: 1003
+#             direction: Inbound
+#       register: securitygroup_output
+#     - local_action: copy content={{ securitygroup_output }} dest=/tmp/securitygroup_output.json
 
 #     - include_tasks: network_interface.yaml
 #       vars:
