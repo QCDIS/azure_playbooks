@@ -34,26 +34,15 @@
       - path: /home/{{ user_name}}/.ssh/authorized_keys
         key_data: "{{public_key}}"
     vm_size: "{{flavor}}"
+    open_ports:
+      - 22
+      - 80
+      - 443
+      - 8080
+      - 6443
+      - 30000-32767
   register: vm_output
       
-
-
-# - azure_rm_virtualmachine:
-#     resource_group: "{{ resource_group_name }}"
-#     name: "{{ vm_name }}"
-#     vm_size: 
-#     admin_username: "{{ user_name}}"
-#     ssh_password_enabled: false
-#     ssh_public_keys:
-#       - path: /home/{{ user_name}}/.ssh/authorized_keys
-#         key_data: "{{public_key}}"
-#     network_interface_names: "{{network_interface_name}}"
-#     virtual_network_name: "{{ resource_group_name }}"
-#     image:
-#         offer: "{{ os_distro }}"
-#         sku: "{{ os_version }}"
-#         version: latest
-#         publisher: "{{publisher_name}}"
-#     register: vm_output
-
-
+- debug:
+    var: vm_output
+     
