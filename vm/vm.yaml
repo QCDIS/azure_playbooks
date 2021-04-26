@@ -52,3 +52,7 @@
   register: vm_ip
   
      
+- set_stats:
+    data:
+      vm: "{{ vm_ip.stdout }}"
+  register: os_server_output
