@@ -12,3 +12,12 @@
         - { name: vm, value: "{{ vm }}" }
 
     - shell: jq -s '.[0] * .[1]' /tmp/ssh_keys.json  /tmp/vm.json > /tmp/attributes.json
+
+
+   - include_vars:
+        file: /tmp/attributes.json
+        name: attributes
+
+    - set_stats:
+        data: "{{ attributes }}"
+      register: attributes
