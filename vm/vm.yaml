@@ -48,7 +48,7 @@
     
 - local_action: copy content={{ vm_output }} dest=/tmp/vm_output.json
 
-- shell: jq '.openstack | {"{{ item.key }}":{attributes:{public_ip:.accessIPv4 }}}' /tmp/vm_output.json
+- shell:  jq '.ansible_facts.azure_vm.properties.networkProfile.networkInterfaces[0].properties.ipConfigurations[0].properties.publicIPAddress.properties | {"{{ item.key }}":{attributes:{public_ip:.ipAddress}}}' /tmp/vm_output.json
   register: vm_ip
   
      
