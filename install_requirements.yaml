@@ -20,7 +20,6 @@
           - ansible[azure]
           - msrest
           - numpy 
-          - sklearn
 #           - ansible-tower-cli
 #           - azure-cli-core
 #           - azure-cli-nspkg
