@@ -22,7 +22,7 @@
     - shell: jq -s '.[0] * .[1]' /tmp/selected_flavors.json /tmp/ssh_keys.json > /tmp/flavors_ssh_keys.json
     - shell: jq -s '.[0] * .[1]' /tmp/resourcegroup.json /tmp/flavors_ssh_keys.json > /tmp/flavors_ssh_keys_resourcegroup.json
     - shell: jq -s '.[0] * .[1]' /tmp/networks.json /tmp/flavors_ssh_keys_resourcegroup.json > /tmp/flavors_ssh_keys_resourcegroup_networks.json
-    - shell: jq -s '.[0] * .[1]' /tmp/instances.json /tmp/flavors_ssh_keys_resourcegroup_networks.json > /tmp//tmp/flavors_ssh_keys_resourcegroup_networks_instances.json
+    - shell: jq -s '.[0] * .[1]' /tmp/instances.json /tmp/flavors_ssh_keys_resourcegroup_networks.json > /tmp/flavors_ssh_keys_resourcegroup_networks_instances.json
     - shell: jq -s '.[0] * .[1]' /tmp/images.json /tmp/flavors_ssh_keys_resourcegroup_networks_instances.json > /tmp/vms.json
     
   
