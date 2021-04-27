@@ -30,9 +30,6 @@
         file: /tmp/vms.json
         name: vms
         
-    - debug: 
-        var: item
-      loop: "{{ vms | dict2items }}"
         
     - include_tasks: vm.yaml
       vars: 
