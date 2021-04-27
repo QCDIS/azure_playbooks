@@ -14,11 +14,6 @@
     updated_os_version: "{{os_version}}"
   when: os_version != "18.04"
   
-- debug:
-    var: updated_os_distro
-    
-- debug:
-    var: updated_os_version
 
 - azure_rm_virtualmachine:
     resource_group: "{{ resource_group_name }}"
@@ -42,9 +37,7 @@
       - 6443
       - 30000-32767
   register: vm_output
-      
-- debug:
-    var: vm_output
+
     
 - local_action: copy content={{ vm_output }} dest=/tmp/vm_output.json
 
