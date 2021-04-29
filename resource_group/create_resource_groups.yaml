@@ -23,7 +23,7 @@
         instance_name: "{{ item.key }}"
       loop: "{{ instances | dict2items }}"
       
-    - shell: jq '{"{{topology_name}}":{resource_group_name:.state.name}}' /tmp/resourcegroup_output.json > /tmp/resourcegroup_attribute.json
+    - shell: jq '{"{{topology_name}}":{resource_group:.state.name}}' /tmp/resourcegroup_output.json > /tmp/resourcegroup_attribute.json
     
     - include_vars:
         file: /tmp/resourcegroup_attribute.json
