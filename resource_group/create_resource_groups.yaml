@@ -27,6 +27,10 @@
     - include_vars:
         file: /tmp/resourcegroup_attribute.json
         name: resourcegroup_attribute
+        
+    - set_stats:
+        data:
+          resource_group_name: "{{ random_name }}"
           
     - set_stats:
         data: "{{resourcegroup_attribute}}"
