@@ -10,12 +10,12 @@
       with_items:
         - { name: ssh_keys, value: "{{ ssh_keys }}" }
         - { name: vm, value: "{{ vm }}" }
-        - { name: resourcegroup_attribute, value: "{{ resourcegroup_attribute }}" }
+        - { name: resource_group_name, value: "{{ resource_group_name }}" }
         
         
 
     - shell: jq -s '.[0] * .[1]' /tmp/ssh_keys.json  /tmp/vm.json > /tmp/ssh_keys_vm.json
-    - shell: jq -s '.[0] * .[1]' /tmp/resourcegroup_attribute.json  /tmp/ssh_keys_vm.json > /tmp/attributes.json
+    - shell: jq -s '.[0] * .[1]' /tmp/resource_group_name.json  /tmp/ssh_keys_vm.json > /tmp/attributes.json
 
 
     - include_vars:
