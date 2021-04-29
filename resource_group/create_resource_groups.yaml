@@ -25,7 +25,8 @@
       
     - set_stats:
         data:
-          resource_group_name: "{{ random_name }}"
+          resource_group_name: 
+            "{{topology_name}}": "{{ random_name }}"
   
       
       
