@@ -41,7 +41,7 @@
     
 - local_action: copy content={{ vm_output }} dest=/tmp/vm_output.json
 
-- shell:  jq '.ansible_facts.azure_vm.properties | {"{{ item.key }}":{attributes:{public_ip:.networkProfile.networkInterfaces[0].properties.ipConfigurations[0].properties.publicIPAddress.properties.ipAddress,node_type:.hardwareProfile.vmSize}}}' /tmp/vm_output.json
+- shell:  jq '.ansible_facts.azure_vm.properties | {"{{ item.key }}":{public_ip:.networkProfile.networkInterfaces[0].properties.ipConfigurations[0].properties.publicIPAddress.properties.ipAddress,node_type:.hardwareProfile.vmSize}}' /tmp/vm_output.json
   register: vm_provision_attributes
   
      
