@@ -26,8 +26,8 @@
     - shell: jq '{"{{topology_name}}":{resource_group_name:.state.name}}' /tmp/resourcegroup_output.json > /tmp/resourcegroup_attribute.json
     
     - include_vars:
-      file: /tmp/resourcegroup_attribute.json
-      name: resourcegroup_attribute
+        file: /tmp/resourcegroup_attribute.json
+        name: resourcegroup_attribute
           
     - set_stats:
         data: "{{resourcegroup_attribute}}"
