@@ -33,7 +33,8 @@
           resource_group_name: "{{ random_name }}"
           
     - set_stats:
-        data: "{{resourcegroup_attribute}}"
+        data: 
+          resourcegroup_attribute: "{{resourcegroup_attribute}}"
         
 
         
