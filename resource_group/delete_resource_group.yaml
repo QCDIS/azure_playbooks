@@ -6,7 +6,11 @@
         force_delete_nonempty: yes
         state: absent
       register: resourcegroup_attribute
-            
+                      
+          
     - set_stats:
         data: 
+          ssh_keys: ""
+          vm: ""
+          resourcegroup: ""
           resourcegroup_attribute: "{{resourcegroup_attribute}}"
