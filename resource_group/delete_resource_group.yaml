@@ -7,6 +7,6 @@
         state: absent
       register: resourcegroup_attribute
             
-   - set_stats:
+    - set_stats:
         data: 
           resourcegroup_attribute: "{{resourcegroup_attribute}}"
