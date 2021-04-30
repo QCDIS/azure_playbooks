@@ -5,7 +5,8 @@
         name: "{{ resource_group_name }}"
         force_delete_nonempty: yes
         state: absent
-      register: resourcegroup
-      
-    - debug:
-        var: resourcegroup
+      register: resourcegroup_attribute
+            
+   - set_stats:
+        data: 
+          resourcegroup_attribute: "{{resourcegroup_attribute}}"
