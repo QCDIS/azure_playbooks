@@ -10,6 +10,7 @@
     "{{ item.key }}":
       user_key_pair:
         protocol: ssh
+        token: ""
         keys:
           private_key: "{{private_key_base64.stdout}}"
           public_key:  "{{public_key_base64.stdout}}"
