@@ -10,8 +10,9 @@
           
     - set_stats:
         data: 
-          ssh_keys: 
-            a: "None"
+          "{{topology_name}}": 
+            ssh_keys: 
+              a: "None"
           vm: 
             b: "None" 
           resourcegroup:  
