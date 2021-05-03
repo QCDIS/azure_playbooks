@@ -10,4 +10,7 @@
           
     - set_stats:
         data: 
+          ssh_keys: "None"
+          vm: "None" 
+          resourcegroup:  "None"
           resourcegroup_attribute: "{{resourcegroup_attribute}}"
