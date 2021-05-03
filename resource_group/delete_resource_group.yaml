@@ -13,8 +13,11 @@
           "{{topology_name}}": 
             ssh_keys: 
               a: "None"
-          vm: 
-            b: "None" 
-          resourcegroup:  
-            c: "None"
-          resourcegroup_attribute: "{{resourcegroup_attribute}}"
+          "{{topology_name}}": 
+            vm: 
+              b: "None" 
+          "{{topology_name}}": 
+            resourcegroup:  
+              c: "None"
+          "{{topology_name}}": 
+            resourcegroup_attribute: "{{resourcegroup_attribute}}"
