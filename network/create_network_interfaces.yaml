@@ -30,9 +30,6 @@
       until: subnet_output.state.provisioning_state == "Succeeded"
       retries: 10
       delay: 2
-
-    - debug:
-        var: subnet_output.state
       
     - local_action: copy content={{ subnet_output }} dest=/tmp/subnet_output.json
 
