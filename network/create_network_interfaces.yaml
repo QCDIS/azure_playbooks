@@ -10,16 +10,22 @@
         name: "{{ resource_group_name }}"
         address_prefixes: "10.0.1.0/24"
       register: virtualnetwork_output
+      
+    - debug:
+        var: virtualnetwork_output
+#       until: virtualnetwork_output.virtualnetworks[0].provisioning_state == "Succeeded"
+#       retries: 10
+#       delay: 2
         
     - local_action: copy content={{ virtualnetwork_output }} dest=/tmp/virtualnetwork_output.json
     
     - azure_rm_virtualnetwork_info:
         resource_group: "{{ resource_group_name }}"
         name: "{{ resource_group_name }}"
-      register: virtualnetwork_info_output
-      until: virtualnetwork_info_output.virtualnetworks[0].provisioning_state == "Succeeded"
-      retries: 10
-      delay: 2
+#       register: virtualnetwork_info_output
+#       until: virtualnetwork_info_output.virtualnetworks[0].provisioning_state == "Succeeded"
+#       retries: 10
+#       delay: 2
 
     - azure_rm_subnet:
         resource_group: "{{ resource_group_name }}"
