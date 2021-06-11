@@ -27,12 +27,12 @@
         address_prefix: "10.0.1.0/24"
         virtual_network: "{{ resource_group_name }}"
       register: subnet_output
-#       until: subnet_output.provisioning_state == "Succeeded"
-#       retries: 10
-#       delay: 2
+      until: subnet_output..state.provisioning_state == "Succeeded"
+      retries: 10
+      delay: 2
 
     - debug:
-        var: subnet_output
+        var: subnet_output.state
       
     - local_action: copy content={{ subnet_output }} dest=/tmp/subnet_output.json
 
