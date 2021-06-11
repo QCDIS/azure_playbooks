@@ -16,14 +16,10 @@
     - azure_rm_virtualnetwork_info:
         resource_group: "{{ resource_group_name }}"
         name: "{{ resource_group_name }}"
-      register: result
-#       until: result.stdout.find("all systems go") != -1
-#       retries: 10
-#       delay: 2
-
-
-    - debug:
-        var: result
+      register: virtualnetwork_info_output
+      until: .result.virtualnetworks[0].provisioning_state == "Succeeded"
+      retries: 10
+      delay: 2
 
     - azure_rm_subnet:
         resource_group: "{{ resource_group_name }}"
@@ -32,6 +28,9 @@
         virtual_network: "{{ resource_group_name }}"
       register: subnet_output
     - local_action: copy content={{ subnet_output }} dest=/tmp/subnet_output.json
+    
+    - debug:
+        var: subnet_output
 
 #     - azure_rm_securitygroup:
 #         resource_group:  "{{ resource_group_name }}"
