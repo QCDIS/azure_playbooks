@@ -12,6 +12,9 @@
       register: virtualnetwork_output
         
     - local_action: copy content={{ virtualnetwork_output }} dest=/tmp/virtualnetwork_output.json
+    
+    - pause:
+        seconds: 2
 
     - azure_rm_subnet:
         resource_group: "{{ resource_group_name }}"
