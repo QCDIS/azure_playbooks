@@ -17,7 +17,7 @@
         resource_group: "{{ resource_group_name }}"
         name: "{{ resource_group_name }}"
       register: virtualnetwork_info_output
-      until: virtualnetwork_info_output.result.virtualnetworks[0].provisioning_state == "Succeeded"
+      until: virtualnetwork_info_output.virtualnetworks[0].provisioning_state == "Succeeded"
       retries: 10
       delay: 2
 
