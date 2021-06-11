@@ -10,12 +10,9 @@
         name: "{{ resource_group_name }}"
         address_prefixes: "10.0.1.0/24"
       register: virtualnetwork_output
-      
-    - debug:
-        var: virtualnetwork_output
-#       until: virtualnetwork_output.virtualnetworks[0].provisioning_state == "Succeeded"
-#       retries: 10
-#       delay: 2
+      until: virtualnetwork_output.state.provisioning_state == "Succeeded"
+      retries: 10
+      delay: 2
         
     - local_action: copy content={{ virtualnetwork_output }} dest=/tmp/virtualnetwork_output.json
     
