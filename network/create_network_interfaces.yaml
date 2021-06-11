@@ -27,7 +27,7 @@
         address_prefix: "10.0.1.0/24"
         virtual_network: "{{ resource_group_name }}"
       register: subnet_output
-      until: subnet_output..state.provisioning_state == "Succeeded"
+      until: subnet_output.state.provisioning_state == "Succeeded"
       retries: 10
       delay: 2
 
