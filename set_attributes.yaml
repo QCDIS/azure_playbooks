@@ -12,18 +12,23 @@
         - { name: vm, value: "{{ vm }}" }
         - { name: resourcegroup, value: "{{ resourcegroup }}" }
         - { name: resourcegroup_attribute, value: "{{ resourcegroup_attribute }}" }
-        
+      when: ssh_keys is defined      
         
 
     - shell: jq -s '.[0] * .[1]' /tmp/ssh_keys.json  /tmp/vm.json > /tmp/ssh_keys_vm.json
+      when: ssh_keys is defined
     - shell: jq -s '.[0] * .[1]' /tmp/resourcegroup_attribute.json  /tmp/ssh_keys_vm.json > /tmp/ssh_keys_vm_resourcegroup.json    
+      when: ssh_keys is defined
     - shell: jq -s '.[0] * .[1]' /tmp/resourcegroup.json  /tmp/ssh_keys_vm_resourcegroup.json > /tmp/attributes.json
+      when: ssh_keys is defined
 
 
     - include_vars:
         file: /tmp/attributes.json
         name: attributes
+      when: ssh_keys is defined
 
     - set_stats:
         data: "{{ attributes }}"
       register: attributes
+      when: ssh_keys is defined
