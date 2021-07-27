@@ -36,7 +36,7 @@
     
 
 
-- shell: jq '.vmimages[] | select(.id|contains("{{publisher}}")) |{"{{ item.key }}":{image:{publisher_name:.name,id:.id}}}' /tmp/azure_Ubuntuimage_info_output_{{ location }}.json
+- shell: jq '.vmimages[] | select(.id|contains("{{publisher}}")) |{"{{ item.key }}":{image:{publisher_name:.name,id:.id}}}' /tmp/azure_image_info_output_{{ location }}.json
   register: image_id
 
 - set_stats:
