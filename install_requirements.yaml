@@ -14,7 +14,7 @@
     - pip:
         name: pip
 #         state: latest
-        state: present
+#         state: present
 
     - pip:
         name:
@@ -23,7 +23,7 @@
           - numpy 
 #         state: forcereinstall
 #         state: latest
-        state: present
+#         state: present
 
 
     - shell: ansible-galaxy collection install azure.azcollection
