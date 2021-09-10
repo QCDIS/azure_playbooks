@@ -43,19 +43,19 @@
         publisher_name: "{{item.value['image']['publisher_name']}}"
         public_key: "{{ item.value['user_key_pair']['keys']['public_key'] | b64decode }}"
       loop: "{{ vms | dict2items }}"
-      async: 2400
-      poll: 0
-      register: async_results
+#       async: 2400
+#       poll: 0
+#       register: async_results
       
       
-    - name: Check sync status
-      async_status:
-        jid: "{{ async_result_item.ansible_job_id }}"
-      loop: "{{ async_results.results }}"
-      loop_control:
-        loop_var: "async_result_item"
-      register: async_poll_results
-      until: async_poll_results.finished
-      retries: 100
+#     - name: Check sync status
+#       async_status:
+#         jid: "{{ async_result_item.ansible_job_id }}"
+#       loop: "{{ async_results.results }}"
+#       loop_control:
+#         loop_var: "async_result_item"
+#       register: async_poll_results
+#       until: async_poll_results.finished
+#       retries: 100
   
   
