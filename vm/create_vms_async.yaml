@@ -1,0 +1,59 @@
+- hosts: localhost
+  collections:
+    - awx.awx
+  vars:
+    ansible_python_interpreter: /usr/bin/python3
+
+  tasks:  
+  
+  
+  
+    - local_action: copy content={{ item.value }} dest=/tmp/{{ item.name }}.json
+      with_items:
+        - { name: selected_flavors, value: "{{ selected_flavors }}" }
+        - { name: ssh_keys, value: "{{ ssh_keys }}" }
+        - { name: resourcegroup, value: "{{ resourcegroup }}" }
+        - { name: networks, value: "{{ networks }}" }
+        - { name: instances, value: "{{ hostvars['localhost']['instances'] }}" }
+        - { name: images, value: "{{ images }}" }
+        
+        
+
+    - shell: jq -s '.[0] * .[1]' /tmp/selected_flavors.json /tmp/ssh_keys.json > /tmp/flavors_ssh_keys.json
+    - shell: jq -s '.[0] * .[1]' /tmp/resourcegroup.json /tmp/flavors_ssh_keys.json > /tmp/flavors_ssh_keys_resourcegroup.json
+    - shell: jq -s '.[0] * .[1]' /tmp/networks.json /tmp/flavors_ssh_keys_resourcegroup.json > /tmp/flavors_ssh_keys_resourcegroup_networks.json
+    - shell: jq -s '.[0] * .[1]' /tmp/instances.json /tmp/flavors_ssh_keys_resourcegroup_networks.json > /tmp/flavors_ssh_keys_resourcegroup_networks_instances.json
+    - shell: jq -s '.[0] * .[1]' /tmp/images.json /tmp/flavors_ssh_keys_resourcegroup_networks_instances.json > /tmp/vms.json
+    
+  
+    - include_vars:
+        file: /tmp/vms.json
+        name: vms
+        
+        
+    - include_tasks: vm.yaml
+      vars: 
+        vm_name: "{{ item.key | replace('_', '') }}"
+        resource_group_name: "{{item.value['resourcegroup']}}"
+        flavor: "{{item.value['flavor_name']}}"
+        user_name: "{{item.value['user_name']}}"
+        network_interface_name: "{{item.value['resourcegroup']}}"
+        os_distro: "{{item.value['os_distro']}}"
+        os_version: "{{item.value['os_version']}}"
+        publisher_name: "{{item.value['image']['publisher_name']}}"
+        public_key: "{{ item.value['user_key_pair']['keys']['public_key'] | b64decode }}"
+      loop: "{{ vms | dict2items }}"
+      async: 2400
+      poll: 0
+      register: async_results
+      
+      
+    - name: Check sync status
+      async_status:
+        jid: "{{ async_result_item.ansible_job_id }}"
+      loop: "{{ async_results.results }}"
+      loop_control:
+        loop_var: "async_result_item"
+      register: async_poll_results
+      until: async_poll_results.finished
+      retries: 100
