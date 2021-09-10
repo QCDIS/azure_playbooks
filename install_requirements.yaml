@@ -11,20 +11,20 @@
         state: present
 #      become: yes
 
-    - pip:
-        name: pip
-        state: latest
+#     - pip:
+#         name: pip
+#         state: latest
 
-    - pip:
-        name:
-          - ansible[azure]
-          - msrest
-          - numpy 
-#         state: forcereinstall
-        state: latest
+#     - pip:
+#         name:
+#           - ansible[azure]
+#           - msrest
+#           - numpy 
+# #         state: forcereinstall
+#         state: latest
 
 
-    - shell: ansible-galaxy collection install azure.azcollection
+#     - shell: ansible-galaxy collection install azure.azcollection
         
 
 
