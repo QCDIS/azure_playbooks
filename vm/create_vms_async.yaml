@@ -42,9 +42,9 @@
         os_version: "{{item.value['os_version']}}"
         publisher_name: "{{item.value['image']['publisher_name']}}"
         public_key: "{{ item.value['user_key_pair']['keys']['public_key'] | b64decode }}"
-      loop: "{{ vms | dict2items }}"
       async: 2400
       poll: 0
+      loop: "{{ vms | dict2items }}"
       register: async_results
       
       
