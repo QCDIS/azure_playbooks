@@ -13,7 +13,8 @@
 
     - pip:
         name: pip
-        state: latest
+#         state: latest
+        state: present
 
     - pip:
         name:
@@ -21,6 +22,7 @@
           - msrest
           - numpy 
 #         state: forcereinstall
+#         state: latest
         state: present
 
 
