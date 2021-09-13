@@ -49,7 +49,7 @@
       
     - name: Run items asynchronously in batch of two items
       vars:
-        vm_info: "{{ item }}"
+        vm_info: "{{ vms }}"
       include_tasks: vm_test.yaml
-      loop: "{{ vms | dict2items | batch(100) | list }}"
+#       loop: "{{ vms | dict2items | batch(100) | list }}"
 
