@@ -1,6 +1,8 @@
 - debug:
-    var: item
+    var: loop_item
   loop: "{{ vm_info }}"
+  loop_control:
+    loop_var: "loop_item"
   
   
 - set_fact:
