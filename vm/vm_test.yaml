@@ -1,5 +1,5 @@
 - debug:
-    var: item.value
+    var: item.value.user_key_pair
   loop: "{{ vm_info | dict2items }}"
 
 - name: Async sleeping for batched_items
