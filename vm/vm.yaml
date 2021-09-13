@@ -50,11 +50,14 @@
 - local_action: copy content={{ item }} dest=/tmp/vm_output_{{item.ansible_job_id}}.json
   loop: "{{async_poll_results.results}}"
 
+      
 
-- shell:  jq '.' /tmp/vm_output_{{item.ansible_job_id}}.json
-  register: vm_provision_attributes
+- shell:  '.ansible_facts.azure_vm.properties | {"{{ item.ansible_facts.azure_vm.tags.name }}":{public_ip:.item.ansible_facts.azure_vm.properties.networkProfile.networkInterfaces[0].properties.ipConfigurations[0].properties.publicIPAddress.properties.ipAddress,node_type:.item.ansible_facts.azure_vm.properties.hardwareProfile.vmSize}}' /tmp/vm_output_{{item.ansible_job_id}}.json
+  register: vm_provision_attributes_{{item.ansible_job_id}}
   loop: "{{async_poll_results.results}}"
  
+ 
+
   
 - debug:
     var: item
