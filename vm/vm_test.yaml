@@ -14,13 +14,25 @@
   until: async_poll_results.finished
   retries: 500
   
+- find:
+    paths: /tmp/
+    patterns: "vm_output_*.json"
+    age: 10d
+  register: older_files
 
-- local_action: copy content={{ async_poll_results }} dest=/tmp/vm_output.json
-- shell:  jq '.' /tmp/vm_output.json
-  register: vm_provision_attributes
+- file:
+    path: "{{ item.path }}"
+    state: absent
+  with_items: "{{ older_files.files }}"
   
-- debug:
-    var: async_poll_results
+  
+- local_action: copy content={{ item }} dest=/tmp/vm_output_{{item.ansible_job_id}}.json
+  loop: "{{async_poll_results.results}}"
+
+
+- shell:  jq '.' /tmp/vm_output_{{item.ansible_job_id}}.json
+  register: vm_provision_attributes
+  loop: "{{async_poll_results.results}}"
  
   
 
