@@ -1,34 +1,18 @@
-- set_fact:
-    updated_os_distro: UbuntuServer
-  when: os_distro == "Ubuntu"
-  
-- set_fact:
-    updated_os_distro: "{{os_distro}}"
-  when: os_distro != "Ubuntu"
-  
-- set_fact:
-    updated_os_version: 18.04-LTS
-  when: os_version == "18.04"
-  
-- set_fact:
-    updated_os_version: "{{os_version}}"
-  when: os_version != "18.04"
-  
 
 - azure_rm_virtualmachine:
-    resource_group: "{{ resource_group_name }}"
-    name: "{{ vm_name }}"
-    admin_username: "{{ user_name}}"
+    resource_group: "{{item.value['resourcegroup']}}"
+    name: "{{ item.key | replace('_', '') }}"
+    admin_username: "{{ item.value['user_name']}}"
     ssh_password_enabled: false
     image:
-      offer: "{{ updated_os_distro }}"
-      publisher: "{{publisher_name}}"
-      sku: "{{ updated_os_version }}"
+      offer: "{{ item.value['updated_os_distro']  }}"
+      publisher: "{{item.value['image']['publisher_name']}}"
+      sku: "{{ item.value['updated_os_version']  }}"
       version: latest
     ssh_public_keys:
-      - path: /home/{{ user_name}}/.ssh/authorized_keys
-        key_data: "{{public_key}}"
-    vm_size: "{{flavor}}"
+      - path: /home/{{ item.value['user_name'] }}/.ssh/authorized_keys
+        key_data: "{{ item.value['user_key_pair']['keys']['public_key'] | b64decode }}"
+    vm_size: "{{item.value['flavor_name']}}"
     open_ports:
       - 22
       - 80
@@ -36,15 +20,52 @@
       - 8080
       - 6443
       - 30000-32767
+  async: 2400
+  poll: 0
+  loop: "{{ vm_info | dict2items }}"
   register: vm_output
 
-    
-- local_action: copy content={{ vm_output }} dest=/tmp/vm_output.json
+- name: Check sync status
+  async_status:
+    jid: "{{ item.ansible_job_id }}"
+  loop: "{{ async_results.results }}"
+  register: async_poll_results
+  until: async_poll_results.finished
+  retries: 500
+  
+- find:
+    paths: /tmp/
+    patterns: "vm_output_*.json"
+    age: 10d
+  register: older_files
 
-- shell:  jq '.ansible_facts.azure_vm.properties | {"{{ item.key }}":{public_ip:.networkProfile.networkInterfaces[0].properties.ipConfigurations[0].properties.publicIPAddress.properties.ipAddress,node_type:.hardwareProfile.vmSize}}' /tmp/vm_output.json
+- file:
+    path: "{{ item.path }}"
+    state: absent
+  with_items: "{{ older_files.files }}"
+  
+  
+- local_action: copy content={{ item }} dest=/tmp/vm_output_{{item.ansible_job_id}}.json
+  loop: "{{async_poll_results.results}}"
+
+
+- shell:  jq '.' /tmp/vm_output_{{item.ansible_job_id}}.json
   register: vm_provision_attributes
+  loop: "{{async_poll_results.results}}"
+ 
+  
+- debug:
+    var: item
+  loop: "{{async_poll_results.results}}"
+
+
+
   
      
-- set_stats:
-    data:
-      vm: "{{ vm_provision_attributes.stdout }}"
+# - set_stats:
+#     data:
+#       vm: "{{ vm_provision_attributes.stdout }}"
+      
+  
+# - debug:
+#     var: async_vm_output
