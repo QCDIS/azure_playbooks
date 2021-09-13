@@ -59,7 +59,7 @@
         publisher_name: "{{item.value['image']['publisher_name']}}"
         public_key: "{{ item.value['user_key_pair']['keys']['public_key'] | b64decode }}"
       include_tasks: vm_test.yaml
-      loop: "{{ vms | dict2items }}"
+      loop: "{{ vms | dict2items | batch(2) | list }}"
   
       
       
