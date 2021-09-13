@@ -12,7 +12,15 @@
   loop: "{{ async_results.results }}"
   register: async_poll_results
   until: async_poll_results.finished
-  retries: 30
+  retries: 500
+  
+
+- local_action: copy content={{ async_poll_results }} dest=/tmp/vm_output.json
+- shell:  jq '.' /tmp/vm_output.json
+  register: vm_provision_attributes
+  
+- debug:
+    var: vm_provision_attributes
  
   
 
