@@ -1,28 +1,6 @@
-- command: echo "{{async_item}}"
-  register: echo_out
-  async: 2400
-  poll: 0
-  loop: "{{ vms | dict2items | batch(2) | list}}"
-  loop_control:
-    loop_var: "async_item"
-    
-- name: Check sync status
-  async_status:
-    jid: "{{ async_result_item.ansible_job_id }}"
-  loop: "{{ async_results.results }}"
-  loop_control:
-    loop_var: "async_result_item"
-  register: async_poll_results
-  until: async_poll_results.finished
-  retries: 50
-  
-- debug:
-    var: echo_out
-
-
-# - set_fact:
-#     updated_os_distro: UbuntuServer
-#   when: os_distro == "Ubuntu"
+- set_fact:
+    updated_os_distro: UbuntuServer
+  when: os_distro == "Ubuntu"
   
 # - set_fact:
 #     updated_os_distro: "{{os_distro}}"
