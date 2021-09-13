@@ -20,7 +20,7 @@
   register: vm_provision_attributes
   
 - debug:
-    var: vm_provision_attributes
+    var: async_poll_results
  
   
 
