@@ -1,6 +1,6 @@
 - name: Create and Add items to dictionary
   set_fact: 
-      userdata: "{{ userdata | default([]) + [{ 'os_distro' : loop_item.value.os_distro }] }}"
+      os_distro: "{{ os_distro | default([]) + [{ 'os_distro' : loop_item.value.os_distro }] }}"
   loop: "{{ vm_info }}"
   loop_control:
     loop_var: "loop_item"  
@@ -8,7 +8,7 @@
 
 - name: Create and Add items to dictionary
   set_fact: 
-      os_distro: "{{ os_distro | default([]) + [{ 'updated_os_distro' : UbuntuServer }] }}"
+      os_distro: "{{ os_distro | default([]) + [{ 'updated_os_distro' : 'UbuntuServer' }] }}"
   loop: "{{ vm_info }}"
   loop_control:
     loop_var: "loop_item"
