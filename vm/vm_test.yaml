@@ -1,5 +1,5 @@
-- debug:
-    var: async_item
+- command: echo "{{async_item}}"
+  register: echo_out
   async: 2400
   poll: 0
   loop: "{{ vms | dict2items | batch(2) | list}}"
@@ -17,7 +17,7 @@
   retries: 50
   
 - debug:
-    var: async_vm_output
+    var: echo_out
 
 
 # - set_fact:
