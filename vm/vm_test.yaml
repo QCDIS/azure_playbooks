@@ -54,6 +54,10 @@
     loop_var: "loop_item"
   when: loop_item.value['os_version'] == "18.04" 
   
+  
+- debug:
+    var: os_distro
+  
 - debug: msg="{{ item.key }} = {{ item.value }}"
   with_dict: "{{ os_version | combine(os_distro) }}"
   
