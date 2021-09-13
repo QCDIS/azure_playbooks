@@ -2,7 +2,7 @@
   ansible.builtin.command: echo {{ async_item }}
   async: 2400
   poll: 0
-  loop: "{{ vms }}"
+  loop: "{{ vms | dict2items | batch(2) | list}}"
   loop_control:
     loop_var: "async_item"
   register: async_results
