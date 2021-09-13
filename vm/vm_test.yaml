@@ -1,21 +1,3 @@
-# - set_fact:
-#     updated_vm_info:
-#         instance_name: "{{loop_item.key}}" 
-#         vm_name: "{{ loop_item.key | replace('_', '') }}"
-#         resource_group_name: "{{loop_item.value['resourcegroup']}}"
-#         flavor: "{{loop_item.value['flavor_name']}}"
-#         user_name: "{{loop_item.value['user_name']}}"
-#         network_interface_name: "{{loop_item.value['resourcegroup']}}"
-#         os_distro: "{{loop_item.value['os_distro']}}"
-#         os_version: "{{loop_item.value['os_version']}}"
-#         publisher_name: "{{loop_item.value['image']['publisher_name']}}"
-#         public_key: "{{ loop_item.value['user_key_pair']['keys']['public_key'] | b64decode }}"
-#   loop: "{{ vm_info }}"
-#   loop_control:
-#     loop_var: "loop_item"
-
-
-
 - set_fact:
     os_distro:
         instance_name: "{{loop_item.key}}" 
@@ -55,19 +37,31 @@
   when: loop_item.value['os_version'] == "18.04" 
   
   
-- debug:
-    var: os_distro
+- set_fact:
+    random_name: "azure_{{ lookup('password', '/dev/null chars=ascii_lowercase,digits length=8') }}"
+    
+    
+- local_action: copy content={{ item.value }} dest=/tmp/{{random_name}}_{{ item.name }}.json
+  with_items:
+    - { name: os_version, value: "{{ os_version }}" }
+    - { name: os_distro, value: "{{ os_distro }}" }
+    - { name: vm_info, value: "{{ vm_info }}" }
+
+
+- shell: jq -s '.[0] * .[1]' /tmp/{{random_name}_os_version.json  /tmp/{{random_name}_os_distro.json > /tmp/{{random_name}_os_version_os_distro.json
+- shell: jq -s '.[0] * .[1]' /tmp/{{random_name}_os_version_os_distro.json /tmp/{{random_name}_vm_info.json > /tmp/{{random_name}_updated_vm.json    
   
-- debug: msg="{{ item.key }} = {{ item.value }}"
-  with_dict: "{{ os_version | combine(sysctl|os_distro({})) | dictsort}}"
   
-  
+- include_vars:
+    file: /tmp/{{random_name}_updated_vm.json
+    name: updated_vm
+      
 
 - name: Async sleeping for batched_items
   ansible.builtin.command: echo {{ async_item }}
   async: 2400
   poll: 0
-  loop: "{{ vm_info }}"
+  loop: "{{ updated_vm }}"
   loop_control:
     loop_var: "async_item"
   register: async_results
