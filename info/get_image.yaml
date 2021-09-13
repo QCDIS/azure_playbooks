@@ -53,7 +53,7 @@
   
 
 # - shell: jq '.vmimages[] | select(.id|contains("Canonical")) |{"{{ item.key }}":{updated_os_distro: "{{updated_os_distro}}",updated_os_version: "{{updated_os_version}}", id:.id,image:{publisher_name:.name,id:.id}}}' /tmp/azure_image_info_output_{{ location }}.json
-- shell: jq '.vmimages[] | select(.id|contains("Canonical")) |{"{{ item.key }}":{ publisher_name:.name,id:.id,image:{publisher_name:.name,id:.id}}}' /tmp/azure_image_info_output_{{ location }}.json
+- shell: jq '.vmimages[] | select(.id|contains("Canonical")) |{"{{ item.key }}":{ updated_os_distro:.name,id:.id,image:{publisher_name:.name,id:.id}}}' /tmp/azure_image_info_output_{{ location }}.json
   register: image_id 
 
 - set_stats:
