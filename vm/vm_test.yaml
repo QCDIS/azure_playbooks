@@ -2,7 +2,7 @@
     var: vm_info
 
 - name: Async sleeping for batched_items
-  ansible.builtin.command: echo {{ async_item }}
+  ansible.builtin.command: echo {{ item }}
   async: 2400
   poll: 0
   loop: "{{ vm_info | dict2items }}"
