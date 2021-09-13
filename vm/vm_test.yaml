@@ -6,10 +6,12 @@
   
   
 - set_fact:
-    instance_name: "{{item.key}}" 
+    instance_name: "{{loop_item.key}}" 
     updated_os_distro: UbuntuServer
-  when: item.os_distro == "Ubuntu"
+  when: loop_item.value['os_distro'] == "Ubuntu"
   loop: "{{ vm_info }}"
+  loop_control:
+    loop_var: "loop_item"
 
 
 - name: Async sleeping for batched_items
