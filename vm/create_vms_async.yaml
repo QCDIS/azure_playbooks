@@ -49,15 +49,7 @@
       
     - name: Run items asynchronously in batch of two items
       vars:
-        vm_name: "{{ item.key | replace('_', '') }}"
-        resource_group_name: "{{item.value['resourcegroup']}}"
-        flavor: "{{item.value['flavor_name']}}"
-        user_name: "{{item.value['user_name']}}"
-        network_interface_name: "{{item.value['resourcegroup']}}"
-        os_distro: "{{item.value['os_distro']}}"
-        os_version: "{{item.value['os_version']}}"
-        publisher_name: "{{item.value['image']['publisher_name']}}"
-        public_key: "{{ item.value['user_key_pair']['keys']['public_key'] | b64decode }}"
+        vm_info: "{{ item }}"
       include_tasks: vm_test.yaml
       loop: "{{ vms | dict2items | batch(100) | list }}"
 
