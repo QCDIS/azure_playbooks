@@ -1,6 +1,6 @@
 
 - name: Async sleeping for batched_items
-  ansible.builtin.command: echo {{ item.value['user_key_pair']['keys']['public_key'] | b64decode }}
+  ansible.builtin.command: echo {{ item.key | replace('_', '') }}
   async: 2400
   poll: 0
   loop: "{{ vm_info | dict2items }}"
