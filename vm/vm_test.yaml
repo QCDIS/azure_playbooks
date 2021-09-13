@@ -3,7 +3,7 @@
   loop: "{{ vm_info | dict2items }}"
 
 - name: Async sleeping for batched_items
-  ansible.builtin.command: echo {{ item.public_key }}
+  ansible.builtin.command: echo {{ item.value['public_key'] }}
   async: 2400
   poll: 0
   loop: "{{ vm_info | dict2items }}"
@@ -19,19 +19,19 @@
   
 
 # - azure_rm_virtualmachine:
-#     resource_group: "{{ resource_group_name }}"
-#     name: "{{ vm_name }}"
-#     admin_username: "{{ user_name}}"
+#     resource_group: "{{ item.value['resource_group_name'] }}"
+#     name: "{{ item.value['vm_name'] }}"
+#     admin_username: "{{ item.value['user_name']}}"
 #     ssh_password_enabled: false
 #     image:
-#       offer: "{{ item.updated_os_distro }}"
-#       publisher: "{{ item.publisher_name }}"
-#       sku: "{{ item.updated_os_version }}"
+#       offer: "{{ item.value['updated_os_distro']  }}"
+#       publisher: "{{ item.value['publisher_name']  }}"
+#       sku: "{{ item.value['updated_os_version']  }}"
 #       version: latest
 #     ssh_public_keys:
 #       - path: /home/{{ user_name}}/.ssh/authorized_keys
-#         key_data: "{{ item.public_key }}"
-#     vm_size: "{{ item.flavor }}"
+#         key_data: "{{ item.value['public_key'] }}"
+#     vm_size: "{{ item.value['flavor']  }}"
 #     open_ports:
 #       - 22
 #       - 80
