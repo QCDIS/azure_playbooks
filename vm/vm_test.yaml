@@ -34,7 +34,7 @@
   loop: "{{ vm_info }}"
   loop_control:
     loop_var: "loop_item"
-  when: loop_item.value['os_version'] == "18.04" 
+  when: loop_item.value['os_version'] != "18.04" 
   
   
 - set_fact:
