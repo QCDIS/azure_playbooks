@@ -51,11 +51,6 @@
     updated_os_version: "{{os_version}}"
   when: os_version != "18.04"
   
-- debug:
-    var: updated_os_version
-  
-
-# - shell: jq '.vmimages[] | select(.id|contains("Canonical")) |{"{{ item.key }}":{updated_os_distro: "{{updated_os_distro}}",updated_os_version: "{{updated_os_version}}", id:.id,image:{publisher_name:.name,id:.id}}}' /tmp/azure_image_info_output_{{ location }}.json
 - shell: jq '.vmimages[] | select(.id|contains("Canonical")) |{"{{ item.key }}":{ updated_os_distro:"{{ updated_os_distro }}",updated_os_version:"{{ updated_os_version }}",image:{publisher_name:.name,id:.id}}}' /tmp/azure_image_info_output_{{ location }}.json
   register: image_id 
 
