@@ -57,5 +57,5 @@
           - 5
         durations: "{{ item }}"
       include_tasks: vm_test.yaml
-      loop: "{{ sleep_durations | batch(2) | list }}"
+      loop: "{{ sleep_durations | list }}"
 
