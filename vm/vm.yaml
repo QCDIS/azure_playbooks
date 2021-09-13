@@ -38,7 +38,7 @@
 - find:
     paths: /tmp/
     patterns: "vm_output_*.json"
-    age: 1sec
+#     age: 1sec
   register: older_files
 
 - file:
