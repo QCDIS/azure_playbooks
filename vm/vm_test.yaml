@@ -1,3 +1,8 @@
+
+- debug:
+    var: vm_info
+
+
 - name: Async sleeping for batched_items
   ansible.builtin.command: echo {{ async_item }}
   async: 2400
