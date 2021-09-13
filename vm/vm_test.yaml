@@ -1,11 +1,60 @@
-- name: Async sleeping for batched_items
-  ansible.builtin.command: echo {{ async_item }}
+- set_fact:
+    updated_os_distro: UbuntuServer
+  when: os_distro == "Ubuntu"
+  
+- set_fact:
+    updated_os_distro: "{{os_distro}}"
+  when: os_distro != "Ubuntu"
+  
+- set_fact:
+    updated_os_version: 18.04-LTS
+  when: os_version == "18.04"
+  
+- set_fact:
+    updated_os_version: "{{os_version}}"
+  when: os_version != "18.04"
+  
+
+- azure_rm_virtualmachine:
+    resource_group: "{{ resource_group_name }}"
+    name: "{{ vm_name }}"
+    admin_username: "{{ user_name}}"
+    ssh_password_enabled: false
+    image:
+      offer: "{{ updated_os_distro }}"
+      publisher: "{{publisher_name}}"
+      sku: "{{ updated_os_version }}"
+      version: latest
+    ssh_public_keys:
+      - path: /home/{{ user_name}}/.ssh/authorized_keys
+        key_data: "{{public_key}}"
+    vm_size: "{{flavor}}"
+    open_ports:
+      - 22
+      - 80
+      - 443
+      - 8080
+      - 6443
+      - 30000-32767
   async: 2400
   poll: 0
   loop: "{{ vms | dict2items | batch(2) | list}}"
   loop_control:
     loop_var: "async_item"
-  register: async_results
+  register: async_vm_output
+
+    
+# - local_action: copy content={{ vm_output }} dest=/tmp/vm_output.json
+
+# - shell:  jq '.ansible_facts.azure_vm.properties | {"{{ item.key }}":{public_ip:.networkProfile.networkInterfaces[0].properties.ipConfigurations[0].properties.publicIPAddress.properties.ipAddress,node_type:.hardwareProfile.vmSize}}' /tmp/vm_output.json
+#   register: vm_provision_attributes
+  
+     
+# - set_stats:
+#     data:
+#       vm: "{{ vm_provision_attributes.stdout }}"
+      
+
 
 - name: Check sync status
   async_status:
@@ -15,7 +64,7 @@
     loop_var: "async_result_item"
   register: async_poll_results
   until: async_poll_results.finished
-  retries: 30
+  retries: 50
   
 - debug:
-    var: async_results
+    var: async_vm_output
