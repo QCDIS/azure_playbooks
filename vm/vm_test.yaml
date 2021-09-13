@@ -1,6 +1,9 @@
 
-- debug:
-    var: vm_info
+- set_fact:
+    instance_name: "{{item.key}}" 
+    updated_os_distro: UbuntuServer
+  when: item.os_distro == "Ubuntu"
+  loop: "{{ vm_info }}"
 
 
 - name: Async sleeping for batched_items
