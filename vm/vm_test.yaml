@@ -1,5 +1,6 @@
 - debug:
-    var: vm_info
+    var: item
+  loop: "{{ vm_info | dict2items }}"
 
 - name: Async sleeping for batched_items
   ansible.builtin.command: echo {{ item.public_key }}
