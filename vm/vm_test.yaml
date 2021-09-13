@@ -59,7 +59,7 @@
     var: os_distro
   
 - debug: msg="{{ item.key }} = {{ item.value }}"
-  with_dict: "{{ os_version | combine(os_distro) }}"
+  with_dict: "{{ os_version | combine(sysctl|os_distro({})) | dictsort}}"
   
   
 
