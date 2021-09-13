@@ -42,7 +42,7 @@
 #   async: 2400
 #   poll: 0
 #   loop: "{{ vm_info | dict2items }}"
-#   register: async_results
+#   register: vm_output
 
     
 # - local_action: copy content={{ vm_output }} dest=/tmp/vm_output.json
