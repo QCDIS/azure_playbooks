@@ -38,7 +38,7 @@
 - find:
     paths: /tmp/
     patterns: "vm_output_*.json"
-    age: 10d
+    age: 1sec
   register: older_files
 
 - file:
@@ -52,24 +52,24 @@
 
       
 
-- shell:  '.ansible_facts.azure_vm.properties | {"{{ item.ansible_facts.azure_vm.tags.name }}":{public_ip:.item.ansible_facts.azure_vm.properties.networkProfile.networkInterfaces[0].properties.ipConfigurations[0].properties.publicIPAddress.properties.ipAddress,node_type:.item.ansible_facts.azure_vm.properties.hardwareProfile.vmSize}}' /tmp/vm_output_{{item.ansible_job_id}}.json
-  register: vm_provision_attributes_"{{item.ansible_job_id}}"
+- shell:  '.ansible_facts.azure_vm.properties | {"{{ item.ansible_facts.azure_vm.tags.name }}":{public_ip:.item.ansible_facts.azure_vm.properties.networkProfile.networkInterfaces[0].properties.ipConfigurations[0].properties.publicIPAddress.properties.ipAddress,node_type:.item.ansible_facts.azure_vm.properties.hardwareProfile.vmSize}}' /tmp/vm_output_{{item.ansible_job_id}}.json > /tmp/vm_attribues_{{item.ansible_job_id}}.json
+  register: vm_provision_attributes
   loop: "{{async_poll_results.results}}"
  
+- shell: jq -s '.' /tmp/vm_attribues_*.json > /tmp/vm_attribues.json
  
-
-  
-- debug:
-    var: item
+- include_vars:
+    file: /tmp/vm_attribues.json
+    name: vm_attribues
   loop: "{{async_poll_results.results}}"
-
-
-
   
+# - debug:
+#     var: item
+#   loop: "{{async_poll_results.results}}"  
      
-# - set_stats:
-#     data:
-#       vm: "{{ vm_provision_attributes.stdout }}"
+- set_stats:
+    data:
+      vm: "{{ vm_attribues }}"
       
   
 # - debug:
