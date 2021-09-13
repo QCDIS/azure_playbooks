@@ -2,20 +2,16 @@
     var: vm_info
 
 - name: Async sleeping for batched_items
-  ansible.builtin.command: echo {{ item }}
+  ansible.builtin.command: echo {{ item.updated_os_distro }}
   async: 2400
   poll: 0
   loop: "{{ vm_info | dict2items }}"
-#   loop_control:
-#     loop_var: "async_item"
   register: async_results
 
 - name: Check sync status
   async_status:
     jid: "{{ item.ansible_job_id }}"
   loop: "{{ async_results.results }}"
-#   loop_control:
-#     loop_var: "async_result_item"
   register: async_poll_results
   until: async_poll_results.finished
   retries: 30
@@ -27,14 +23,14 @@
 #     admin_username: "{{ user_name}}"
 #     ssh_password_enabled: false
 #     image:
-#       offer: "{{ updated_os_distro }}"
-#       publisher: "{{publisher_name}}"
-#       sku: "{{ updated_os_version }}"
+#       offer: "{{ item.updated_os_distro }}"
+#       publisher: "{{ item.publisher_name }}"
+#       sku: "{{ item.updated_os_version }}"
 #       version: latest
 #     ssh_public_keys:
 #       - path: /home/{{ user_name}}/.ssh/authorized_keys
-#         key_data: "{{public_key}}"
-#     vm_size: "{{flavor}}"
+#         key_data: "{{ item.public_key }}"
+#     vm_size: "{{ item.flavor }}"
 #     open_ports:
 #       - 22
 #       - 80
@@ -42,12 +38,10 @@
 #       - 8080
 #       - 6443
 #       - 30000-32767
-#   register: vm_output
 #   async: 2400
 #   poll: 0
-#   loop: "{{ vms | dict2items | batch(2) | list}}"
-#   loop_control:
-#     loop_var: "async_item"
+#   loop: "{{ vm_info | dict2items }}"
+#   register: async_results
 
     
 # - local_action: copy content={{ vm_output }} dest=/tmp/vm_output.json
