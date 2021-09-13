@@ -1,23 +1,32 @@
+# - set_fact:
+#     updated_vm_info:
+#         instance_name: "{{loop_item.key}}" 
+#         vm_name: "{{ loop_item.key | replace('_', '') }}"
+#         resource_group_name: "{{loop_item.value['resourcegroup']}}"
+#         flavor: "{{loop_item.value['flavor_name']}}"
+#         user_name: "{{loop_item.value['user_name']}}"
+#         network_interface_name: "{{loop_item.value['resourcegroup']}}"
+#         os_distro: "{{loop_item.value['os_distro']}}"
+#         os_version: "{{loop_item.value['os_version']}}"
+#         publisher_name: "{{loop_item.value['image']['publisher_name']}}"
+#         public_key: "{{ loop_item.value['user_key_pair']['keys']['public_key'] | b64decode }}"
+#   loop: "{{ vm_info }}"
+#   loop_control:
+#     loop_var: "loop_item"
+
+
+
 - set_fact:
-    updated_vm_info:
+    os_distro:
         instance_name: "{{loop_item.key}}" 
-        vm_name: "{{ loop_item.key | replace('_', '') }}"
-        resource_group_name: "{{loop_item.value['resourcegroup']}}"
-        flavor: "{{loop_item.value['flavor_name']}}"
-        user_name: "{{loop_item.value['user_name']}}"
-        network_interface_name: "{{loop_item.value['resourcegroup']}}"
-        os_distro: "{{loop_item.value['os_distro']}}"
-        os_version: "{{loop_item.value['os_version']}}"
-        publisher_name: "{{loop_item.value['image']['publisher_name']}}"
-        public_key: "{{ loop_item.value['user_key_pair']['keys']['public_key'] | b64decode }}"
+        updated_os_distro: UbuntuServer
   loop: "{{ vm_info }}"
   loop_control:
     loop_var: "loop_item"
-
-  
+  when: loop_item.value['os_distro'] == "Ubuntu"
     
 - set_fact:
-    updated_vm_info:
+    os_distro:
         instance_name: "{{loop_item.key}}" 
         updated_os_distro: "{{os_distro}}"
   when: loop_item.value['os_distro'] != "Ubuntu"
@@ -27,7 +36,7 @@
     
   
 - set_fact:
-    updated_vm_info:
+    os_version:
         instance_name: "{{loop_item.key}}" 
         updated_os_version: 18.04-LTS
   loop: "{{ vm_info }}"
@@ -35,8 +44,9 @@
     loop_var: "loop_item"
   when: loop_item.value['os_version'] == "18.04" 
   
+  
 - set_fact:
-    updated_vm_info:
+    os_version:
         instance_name: "{{loop_item.key}}" 
         updated_os_version: "{{os_version}}"
   loop: "{{ vm_info }}"
@@ -44,21 +54,10 @@
     loop_var: "loop_item"
   when: loop_item.value['os_version'] == "18.04" 
   
+- debug: msg="{{ item.key }} = {{ item.value }}"
+  with_dict: "{{ os_version | combine(os_distro) }}"
   
-- set_fact:
-    updated_vm_info:
-        instance_name: "{{loop_item.key}}" 
-        updated_os_distro: UbuntuServer
-  loop: "{{ vm_info }}"
-  loop_control:
-    loop_var: "loop_item"
-  when: loop_item.value['os_distro'] == "Ubuntu"
-
   
-- debug:
-    var: updated_vm_info
-  
-
 
 - name: Async sleeping for batched_items
   ansible.builtin.command: echo {{ async_item }}
