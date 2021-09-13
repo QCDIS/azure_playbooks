@@ -2,7 +2,7 @@
   ansible.builtin.command: echo {{ async_item }}
   async: 2400
   poll: 0
-  loop: "{{ durations }}"
+  loop: "{{ vm_info }}"
   loop_control:
     loop_var: "async_item"
   register: async_results
