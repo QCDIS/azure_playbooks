@@ -1,14 +1,16 @@
 - set_fact:
-    "{{loop_item.key}}":
-        updated_os_distro: UbuntuServer
+    os_distro:
+        "{{loop_item.key}}":
+            updated_os_distro: UbuntuServer
   loop: "{{ vm_info }}"
   loop_control:
     loop_var: "loop_item"
   when: loop_item.value['os_distro'] == "Ubuntu"
     
 - set_fact:
-    "{{loop_item.key}}":
-        updated_os_distro: "{{loop_item.value['os_distro']}}"
+    os_distro:
+        "{{loop_item.key}}":
+            updated_os_distro: "{{loop_item.value['os_distro']}}"
   when: loop_item.value['os_distro'] != "Ubuntu"
   loop: "{{ vm_info }}"
   loop_control:
@@ -16,8 +18,9 @@
     
   
 - set_fact:
-    "{{loop_item.key}}":
-        updated_os_version: 18.04-LTS
+    os_version:
+        "{{loop_item.key}}":
+            updated_os_version: 18.04-LTS
   loop: "{{ vm_info }}"
   loop_control:
     loop_var: "loop_item"
@@ -25,8 +28,9 @@
   
   
 - set_fact:
-    "{{loop_item.key}}":
-        updated_os_version: "{{loop_item.value['os_version']}}"
+    os_version:
+        "{{loop_item.key}}":
+            updated_os_version: "{{loop_item.value['os_version']}}"
   loop: "{{ vm_info }}"
   loop_control:
     loop_var: "loop_item"
