@@ -1,10 +1,29 @@
 
-- name: Async sleeping for batched_items
-  ansible.builtin.command: echo {{ item.key | replace('_', '') }}
+- azure_rm_virtualmachine:
+    resource_group: "{{item.value['resourcegroup']}}"
+    name: "{{ item.key | replace('_', '') }}"
+    admin_username: "{{ item.value['user_name']}}"
+    ssh_password_enabled: false
+    image:
+      offer: "{{ item.value['updated_os_distro']  }}"
+      publisher: "{{item.value['image']['publisher_name']}}"
+      sku: "{{ item.value['updated_os_version']  }}"
+      version: latest
+    ssh_public_keys:
+      - path: /home/{{ item.value['user_name'] }}/.ssh/authorized_keys
+        key_data: "{{ item.value['user_key_pair']['keys']['public_key'] | b64decode }}"
+    vm_size: "{{item.value['flavor_name']}}"
+    open_ports:
+      - 22
+      - 80
+      - 443
+      - 8080
+      - 6443
+      - 30000-32767
   async: 2400
   poll: 0
   loop: "{{ vm_info | dict2items }}"
-  register: async_results
+  register: vm_output
 
 - name: Check sync status
   async_status:
@@ -35,55 +54,18 @@
   loop: "{{async_poll_results.results}}"
  
   
+- debug:
+    var: item
+  loop: "{{async_poll_results.results}}"
 
-# - azure_rm_virtualmachine:
-#     resource_group: "{{item.value['resourcegroup']}}"
-#     name: "{{ item.key | replace('_', '') }}"
-#     admin_username: "{{ item.value['user_name']}}"
-#     ssh_password_enabled: false
-#     image:
-#       offer: "{{ item.value['updated_os_distro']  }}"
-#       publisher: "{{item.value['image']['publisher_name']}}"
-#       sku: "{{ item.value['updated_os_version']  }}"
-#       version: latest
-#     ssh_public_keys:
-#       - path: /home/{{ item.value['user_name'] }}/.ssh/authorized_keys
-#         key_data: "{{item.value['image']['publisher_name']}}"
-#     vm_size: "{{item.value['flavor_name']}}"
-#     open_ports:
-#       - 22
-#       - 80
-#       - 443
-#       - 8080
-#       - 6443
-#       - 30000-32767
-#   async: 2400
-#   poll: 0
-#   loop: "{{ vm_info | dict2items }}"
-#   register: vm_output
 
-    
-# - local_action: copy content={{ vm_output }} dest=/tmp/vm_output.json
 
-# - shell:  jq '.ansible_facts.azure_vm.properties | {"{{ item.key }}":{public_ip:.networkProfile.networkInterfaces[0].properties.ipConfigurations[0].properties.publicIPAddress.properties.ipAddress,node_type:.hardwareProfile.vmSize}}' /tmp/vm_output.json
-#   register: vm_provision_attributes
   
      
 # - set_stats:
 #     data:
 #       vm: "{{ vm_provision_attributes.stdout }}"
       
-
-
-# - name: Check sync status
-#   async_status:
-#     jid: "{{ async_result_item.ansible_job_id }}"
-#   loop: "{{ async_results.results }}"
-#   loop_control:
-#     loop_var: "async_result_item"
-#   register: async_poll_results
-#   until: async_poll_results.finished
-#   retries: 50
   
 # - debug:
 #     var: async_vm_output
