@@ -1,12 +1,24 @@
 - name: Create and Add items to dictionary
   set_fact: 
-      os_distro: "{{ os_distro | default([]) + [{ 'key' : loop_item.key, 'updated_os_distro' : 'UbuntuServer' }] }}"
-  loop: "{{ vm_info }}"
-  loop_control:
-    loop_var: "loop_item"
-  when: loop_item.value['os_distro'] == "Ubuntu"      
+      userdata: "{{ userdata | default({}) | combine ({ item.key : item.value }) }}"
+    - name: Create and Add items to dictionary
+      set_fact: 
+          userdata: "{{ userdata | default({}) | combine ({ item.key : item.value }) }}"
+      with_items:
+        - { 'key': 'Name' , 'value': 'SaravAK'}
+        - { 'key': 'Email' , 'value': 'sarav@gritfy.com'}
+        - { 'key': 'Location' , 'value': 'Coimbatore'}
+        - { 'key': 'Nationality' , 'value': 'Indian'}    - name: Create and Add items to dictionary
+      set_fact: 
+          userdata: "{{ userdata | default({}) | combine ({ item.key : item.value }) }}"
+      with_items:
+        - { 'key': 'Name' , 'value': 'SaravAK'}
+        - { 'key': 'Email' , 'value': 'sarav@gritfy.com'}
+        - { 'key': 'Location' , 'value': 'Coimbatore'}
+        - { 'key': 'Nationality' , 'value': 'Indian'}
         
         
+
 
 - set_fact:
     os_distro:
