@@ -41,11 +41,9 @@
     random_name: "azure_{{ lookup('password', '/dev/null chars=ascii_lowercase,digits length=8') }}"
     
     
-- local_action: copy content={{ item.value }} dest=/tmp/{{random_name}}_{{ item.name }}.json
-  with_items:
-    - { name: os_version, value: "{{ os_version }}" }
-    - { name: os_distro, value: "{{ os_distro }}" }
-    - { name: vm_info, value: "{{ vm_info }}" }
+- local_action: copy content={{ os_version }} dest=/tmp/{{random_name}}_os_version.json
+- local_action: copy content={{ os_distro }} dest=/tmp/{{random_name}}_os_distro.json
+- local_action: copy content={{ vm_info }} dest=/tmp/{{random_name}}_vm_info.json
 
 
 - shell: jq -s '.[0] * .[1]' /tmp/{{random_name}}_os_version.json  /tmp/{{random_name}}_os_distro.json > /tmp/{{random_name}}_os_version_os_distro.json  
