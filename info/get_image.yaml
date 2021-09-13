@@ -35,9 +35,25 @@
   
     
 
+- set_fact:
+    updated_os_distro: UbuntuServer
+  when: os_distro == "Ubuntu"
+  
+- set_fact:
+    updated_os_distro: "{{os_distro}}"
+  when: os_distro != "Ubuntu"
+  
+- set_fact:
+    updated_os_version: 18.04-LTS
+  when: os_version == "18.04"
+  
+- set_fact:
+    updated_os_version: "{{os_version}}"
+  when: os_version != "18.04"
+  
 
-- shell: jq '.vmimages[] | select(.id|contains("{{publisher}}")) |{"{{ item.key }}":{image:{publisher_name:.name,id:.id}}}' /tmp/azure_image_info_output_{{ location }}.json
-  register: image_id
+- shell: jq '.vmimages[] | select(.id|contains("Canonical")) |{"{{ item.key }}":{updated_os_distro: "{{updated_os_distro}}",updated_os_version: "{{updated_os_version}}", id:.id,image:{publisher_name:.name,id:.id}}}' /tmp/azure_image_info_output_{{ location }}.json
+  register: image_id 
 
 - set_stats:
    data:
