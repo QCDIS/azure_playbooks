@@ -5,9 +5,9 @@
   ansible.builtin.command: echo {{ async_item }}
   async: 2400
   poll: 0
-  loop: "{{ updated_vm }}"
-  loop_control:
-    loop_var: "async_item"
+  loop: "{{ vm_info }}"
+#   loop_control:
+#     loop_var: "async_item"
   register: async_results
 
 - name: Check sync status
