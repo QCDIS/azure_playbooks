@@ -48,9 +48,9 @@
     - { name: vm_info, value: "{{ vm_info }}" }
 
 
-- shell: jq -s '.[0] * .[1]' /tmp/{{random_name}_os_version.json  /tmp/{{random_name}_os_distro.json > /tmp/{{random_name}_os_version_os_distro.json
-- shell: jq -s '.[0] * .[1]' /tmp/{{random_name}_os_version_os_distro.json /tmp/{{random_name}_vm_info.json > /tmp/{{random_name}_updated_vm.json    
-  
+- shell: jq -s '.[0] * .[1]' /tmp/{{random_name}}_os_version.json  /tmp/{{random_name}}_os_distro.json > /tmp/{{random_name}}_os_version_os_distro.json  
+- shell: jq -s '.[0] * .[1]' /tmp/{{random_name}}_os_version_os_distro.json  /tmp/{{random_name}}_vm_info.json > /tmp/{{random_name}}_updated_vm.json  
+        
   
 - include_vars:
     file: /tmp/{{random_name}_updated_vm.json
