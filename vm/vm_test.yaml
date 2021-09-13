@@ -1,6 +1,6 @@
 - name: Async sleeping for batched_items
-  ansible.builtin.command: sleep {{ async_item }}
-  async: 45
+  ansible.builtin.command: echo {{ async_item }}
+  async: 2400
   poll: 0
   loop: "{{ durations }}"
   loop_control:
