@@ -8,30 +8,30 @@
   
   
   
-    - local_action: copy content={{ item.value }} dest=/tmp/{{ item.name }}.json
-      with_items:
-        - { name: selected_flavors, value: "{{ selected_flavors }}" }
-        - { name: ssh_keys, value: "{{ ssh_keys }}" }
-        - { name: resourcegroup, value: "{{ resourcegroup }}" }
-        - { name: networks, value: "{{ networks }}" }
-        - { name: instances, value: "{{ hostvars['localhost']['instances'] }}" }
-        - { name: images, value: "{{ images }}" }
+#     - local_action: copy content={{ item.value }} dest=/tmp/{{ item.name }}.json
+#       with_items:
+#         - { name: selected_flavors, value: "{{ selected_flavors }}" }
+#         - { name: ssh_keys, value: "{{ ssh_keys }}" }
+#         - { name: resourcegroup, value: "{{ resourcegroup }}" }
+#         - { name: networks, value: "{{ networks }}" }
+#         - { name: instances, value: "{{ hostvars['localhost']['instances'] }}" }
+#         - { name: images, value: "{{ images }}" }
         
         
 
-    - shell: jq -s '.[0] * .[1]' /tmp/selected_flavors.json /tmp/ssh_keys.json > /tmp/flavors_ssh_keys.json
-    - shell: jq -s '.[0] * .[1]' /tmp/resourcegroup.json /tmp/flavors_ssh_keys.json > /tmp/flavors_ssh_keys_resourcegroup.json
-    - shell: jq -s '.[0] * .[1]' /tmp/networks.json /tmp/flavors_ssh_keys_resourcegroup.json > /tmp/flavors_ssh_keys_resourcegroup_networks.json
-    - shell: jq -s '.[0] * .[1]' /tmp/instances.json /tmp/flavors_ssh_keys_resourcegroup_networks.json > /tmp/flavors_ssh_keys_resourcegroup_networks_instances.json
-    - shell: jq -s '.[0] * .[1]' /tmp/images.json /tmp/flavors_ssh_keys_resourcegroup_networks_instances.json > /tmp/vms.json
+#     - shell: jq -s '.[0] * .[1]' /tmp/selected_flavors.json /tmp/ssh_keys.json > /tmp/flavors_ssh_keys.json
+#     - shell: jq -s '.[0] * .[1]' /tmp/resourcegroup.json /tmp/flavors_ssh_keys.json > /tmp/flavors_ssh_keys_resourcegroup.json
+#     - shell: jq -s '.[0] * .[1]' /tmp/networks.json /tmp/flavors_ssh_keys_resourcegroup.json > /tmp/flavors_ssh_keys_resourcegroup_networks.json
+#     - shell: jq -s '.[0] * .[1]' /tmp/instances.json /tmp/flavors_ssh_keys_resourcegroup_networks.json > /tmp/flavors_ssh_keys_resourcegroup_networks_instances.json
+#     - shell: jq -s '.[0] * .[1]' /tmp/images.json /tmp/flavors_ssh_keys_resourcegroup_networks_instances.json > /tmp/vms.json
     
   
-    - include_vars:
-        file: /tmp/vms.json
-        name: vms
+#     - include_vars:
+#         file: /tmp/vms.json
+#         name: vms
         
         
-    - include_tasks: vm.yaml
+    - include_tasks: vm_test.yaml
       vars: 
         vm_name: "{{ item.key | replace('_', '') }}"
         resource_group_name: "{{item.value['resourcegroup']}}"
