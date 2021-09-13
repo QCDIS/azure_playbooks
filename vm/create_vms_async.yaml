@@ -49,30 +49,13 @@
       
     - name: Run items asynchronously in batch of two items
       vars:
-        vm_name: "{{ item.key | replace('_', '') }}"
-        resource_group_name: "{{item.value['resourcegroup']}}"
-        flavor: "{{item.value['flavor_name']}}"
-        user_name: "{{item.value['user_name']}}"
-        network_interface_name: "{{item.value['resourcegroup']}}"
-        os_distro: "{{item.value['os_distro']}}"
-        os_version: "{{item.value['os_version']}}"
-        publisher_name: "{{item.value['image']['publisher_name']}}"
-        public_key: "{{ item.value['user_key_pair']['keys']['public_key'] | b64decode }}"
+        sleep_durations:
+          - 1
+          - 2
+          - 3
+          - 4
+          - 5
+        durations: "{{ item }}"
       include_tasks: vm_test.yaml
-      loop: "{{ vms | dict2items | batch(2) | list }}"
-      async: 2400
-      poll: 0
-      loop_control:
-        loop_var: "async_item"
-  
-      
-      
-#     - name: Check sync status
-#       async_status:
-#         jid: "{{ async_result_item.ansible_job_id }}"
-#       loop: "{{ async_results.results }}"
-#       loop_control:
-#         loop_var: "async_result_item"
-#       register: async_poll_results
-#       until: async_poll_results.finished
-#       retries: 100
+      loop: "{{ sleep_durations | batch(2) | list }}"
+
