@@ -1,5 +1,5 @@
 - debug:
-    var: item
+    var: item.value.public_key
   loop: "{{ vm_info | dict2items }}"
 
 - name: Async sleeping for batched_items
