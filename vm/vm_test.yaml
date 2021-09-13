@@ -4,7 +4,6 @@
   loop: "{{ vm_info }}"
   loop_control:
     loop_var: "loop_item"
-  when: loop_item.value['os_distro'] == "Ubuntu"
         
         
 
@@ -57,7 +56,6 @@
 - local_action: copy content={{ vm_info }} dest=/tmp/{{random_name}}_vm_info.json
 
 
-- shell jq . 
 - shell: jq -s '.[0] * .[1]' /tmp/{{random_name}}_os_version.json  /tmp/{{random_name}}_os_distro.json > /tmp/{{random_name}}_os_version_os_distro.json  
 - shell: jq -s '.[0] * .[1]' /tmp/{{random_name}}_os_version_os_distro.json  /tmp/{{random_name}}_vm_info.json > /tmp/{{random_name}}_updated_vm.json  
         
