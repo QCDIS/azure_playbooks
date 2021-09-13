@@ -1,4 +1,8 @@
-
+- debug:
+    var: item
+  loop: "{{ vm_info }}"
+  
+  
 - set_fact:
     instance_name: "{{item.key}}" 
     updated_os_distro: UbuntuServer
