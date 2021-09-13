@@ -20,6 +20,8 @@
       - 8080
       - 6443
       - 30000-32767
+    tags:
+        name: "{{ item.key }}"
   async: 2400
   poll: 0
   loop: "{{ vm_info | dict2items }}"
