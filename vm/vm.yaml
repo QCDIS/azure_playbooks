@@ -57,12 +57,20 @@
 # - shell:  jq '.ansible_facts.azure_vm.properties | {"{{ item.ansible_facts.azure_vm.tags.name }}":{public_ip:.networkProfile.networkInterfaces[0].properties.ipConfigurations[0].properties.publicIPAddress.properties.ipAddress,node_type:.hardwareProfile.vmSize}}' /tmp/vm_output_{{item.ansible_job_id}}.json > /tmp/vm_attribues/{{item.ansible_job_id}}.json
 #   loop: "{{async_poll_results.results}}"
  
-- shell: jq -s '.' /tmp/vm_attribues/*.json > /tmp/vm_attribues.json
+# - shell: jq -s '.' /tmp/vm_attribues/*.json > /tmp/vm_attribues.json
  
-- include_vars:
-    file: /tmp/vm_attribues.json
-    name: vm_attribues
+# - include_vars:
+#     file: /tmp/vm_attribues.json
+#     name: vm_attribues
   
+
+- include_vars:
+    dir: /tmp/vm_attribues/
+    extensions:
+      - 'json'
+    name: vm_attribues
+      
+      
 # - debug:
 #     var: item
 #   loop: "{{async_poll_results.results}}"  
