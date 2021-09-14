@@ -58,11 +58,6 @@
   loop: "{{async_poll_results.results}}"
  
 - shell: jq -s '.' /tmp/vm_attribues/*.json > /tmp/vm_attribues.json
- 
-- include_vars:
-    file: /tmp/vm_attribues.json
-    name: vm_attribues
-  
 
 - include_vars:
     dir: /tmp/vm_attribues/
