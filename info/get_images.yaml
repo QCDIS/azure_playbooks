@@ -1,5 +1,5 @@
 - hosts: localhost
-  vars:
+  gather_facts: no
   tasks:
 
 
