@@ -62,7 +62,6 @@
 - include_vars:
     file: /tmp/vm_attribues.json
     name: vm_attribues
-  loop: "{{async_poll_results.results}}"
   
 # - debug:
 #     var: item
