@@ -30,7 +30,7 @@
         name: "{{ item.key }}"
   async: 2400
   poll: 0
-  loop: "{{ vm_info | dict2items }}"
+  loop: "{{ vm_info | batch(32) | dict2items }}"
   register: vm_output
 
 - name: Check sync status
