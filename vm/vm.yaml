@@ -35,7 +35,7 @@
   async: 2400
   poll: 0
 #   loop: "{{ vm_info | dict2items }}"
-  loop: "{{ vm_info_list | batch(40 | list }}"
+  loop: "{{ vm_info_list | batch(40) | list }}"
   register: vm_output
 
 - name: Check sync status
