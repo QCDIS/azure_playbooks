@@ -34,12 +34,6 @@
     - set_fact:
         vm_list: "{{ vms | dict2items }}"
 
-      
-#     - name: Run items asynchronously in batch
-#       vars:
-#         vm_info: "{{ vms }}"
-#       include_tasks: vm.yaml
-      
     - name: Run items asynchronously in batch 
       vars:
         vm_info: "{{ item }}"
