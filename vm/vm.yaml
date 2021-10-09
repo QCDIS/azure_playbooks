@@ -5,7 +5,7 @@
     name: "{{ async_item.key | replace('_', '') }}"
     admin_username: "{{ async_item.value['user_name']}}"
     ssh_password_enabled: false
-#    os_disk_size_gb: 10
+    os_disk_size_gb: 10
     image:
       offer: "{{ async_item.value['updated_os_distro']  }}"
       publisher: "{{async_item.value['image']['publisher_name']}}"
