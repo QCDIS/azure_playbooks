@@ -1,5 +1,5 @@
 - name: Async sleeping for batched_items
-  shell: echo "{{async_item.value}}"
+  shell: echo "{{async_item.value['resourcegroup']}}"
   async: 45
   poll: 0
   loop: "{{ vm_info }}"
