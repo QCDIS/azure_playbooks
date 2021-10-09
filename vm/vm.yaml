@@ -2,7 +2,9 @@
     vm_info_list: "{{ vm_info | dict2items }}"
     
 - debug:
-    var: item
+    var: async_item
+  loop_control:
+    loop_var: "async_item"
   loop: "{{ vm_info_list | batch(40) | list }}"
         
 - azure_rm_virtualmachine:
