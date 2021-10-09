@@ -1,4 +1,9 @@
-
+- set_fact:
+    vm_info_list: "{{ vm_info | dict2items }}"
+    
+- debug:
+    var: vm_info_list
+        
 - azure_rm_virtualmachine:
     resource_group: "{{item.value['resourcegroup']}}"
     name: "{{ item.key | replace('_', '') }}"
@@ -18,7 +23,6 @@
 #       disk_size_gb: "{{ item.value['disk_size'] | replace(' MB','') | int // 1000 }}"
 #       caching: ReadWrite
 #       managed_disk_type: StandardSSD_LRS
-      
     open_ports:
       - 22
       - 80
@@ -30,7 +34,8 @@
         name: "{{ item.key }}"
   async: 2400
   poll: 0
-  loop: "{{ vm_info | dict2items | batch(32) }}"
+#   loop: "{{ vm_info | dict2items }}"
+  loop: "{{ vm_info_list | batch(40 | list }}"
   register: vm_output
 
 - name: Check sync status
