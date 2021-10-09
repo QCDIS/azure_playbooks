@@ -2,7 +2,8 @@
     vm_info_list: "{{ vm_info | dict2items }}"
     
 - debug:
-    var: vm_info_list
+    var: item
+  loop: "{{ vm_info_list | batch(40) | list }}"
         
 - azure_rm_virtualmachine:
     resource_group: "{{item.value['resourcegroup']}}"
