@@ -41,7 +41,7 @@
       vars:
         vm_info: "{{ item }}"
       include_tasks: execute_batch.yml
-      loop: "{{ vms | batch(2) | list }}"
+      loop: "{{ vms | batch(50) | list }}"
   
   
   
