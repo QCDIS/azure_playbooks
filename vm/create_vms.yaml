@@ -43,7 +43,7 @@
     - name: Run items asynchronously in batch 
       vars:
         vm_info: "{{ item }}"
-      include_tasks: execute_batch.yml
+      include_tasks: vm.yaml
       loop: "{{ vm_list | batch(50) | list }}"
       loop_control:
         pause: 1
