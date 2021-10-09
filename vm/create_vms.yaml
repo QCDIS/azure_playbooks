@@ -32,7 +32,17 @@
         name: vms
         
       
+#     - name: Run items asynchronously in batch
+#       vars:
+#         vm_info: "{{ vms }}"
+#       include_tasks: vm.yaml
+      
     - name: Run items asynchronously in batch of two items
       vars:
-        vm_info: "{{ vms }}"
-      include_tasks: vm.yaml
+        vm_info: "{{ item }}"
+      include_tasks: execute_batch.yml
+      loop: "{{ vms | batch(2) | list }}"
+  
+  
+  
+      
