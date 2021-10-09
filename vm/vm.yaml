@@ -1,22 +1,22 @@
 
         
 - azure_rm_virtualmachine:
-    resource_group: "{{item.value['resourcegroup']}}"
-    name: "{{ item.key | replace('_', '') }}"
+    resource_group: "{{async_item.value['resourcegroup']}}"
+    name: "{{ async_item.key | replace('_', '') }}"
     admin_username: "{{ item.value['user_name']}}"
     ssh_password_enabled: false
     image:
-      offer: "{{ item.value['updated_os_distro']  }}"
-      publisher: "{{item.value['image']['publisher_name']}}"
-      sku: "{{ item.value['updated_os_version']  }}"
+      offer: "{{ async_item.value['updated_os_distro']  }}"
+      publisher: "{{async_item.value['image']['publisher_name']}}"
+      sku: "{{ async_item.value['updated_os_version']  }}"
       version: latest
     ssh_public_keys:
-      - path: /home/{{ item.value['user_name'] }}/.ssh/authorized_keys
-        key_data: "{{ item.value['user_key_pair']['keys']['public_key'] | b64decode }}"
-    vm_size: "{{item.value['flavor_name']}}"
+      - path: /home/{{ async_item.value['user_name'] }}/.ssh/authorized_keys
+        key_data: "{{ async_item.value['user_key_pair']['keys']['public_key'] | b64decode }}"
+    vm_size: "{{async_item.value['flavor_name']}}"
 #   data_disks:
 #     - lun: 0
-#       disk_size_gb: "{{ item.value['disk_size'] | replace(' MB','') | int // 1000 }}"
+#       disk_size_gb: "{{ async_item.value['disk_size'] | replace(' MB','') | int // 1000 }}"
 #       caching: ReadWrite
 #       managed_disk_type: StandardSSD_LRS
     open_ports:
@@ -27,12 +27,14 @@
       - 6443
       - 30000-32767
     tags:
-        name: "{{ item.key }}"
+        name: "{{ async_item.key }}"
   async: 2400
   poll: 0
-#   loop: "{{ vm_info | dict2items }}"
-  loop: "{{ vm_info_list | batch(40) | list }}"
+  loop: "{{ vm_info }}"
+  loop_control:
+    loop_var: "async_item"
   register: vm_output
+  
 
 - name: Check sync status
   async_status:
