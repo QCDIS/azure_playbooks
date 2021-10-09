@@ -45,6 +45,8 @@
         vm_info: "{{ item }}"
       include_tasks: execute_batch.yml
       loop: "{{ vm_list | batch(50) | list }}"
+      loop_control:
+        pause: 1
   
   
   
