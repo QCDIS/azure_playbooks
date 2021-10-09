@@ -14,10 +14,11 @@ def get_shorter_dist(available_instances, requested_instances):
         min_dist = sys.maxsize
         requested_instance = requested_instances[requested_instance_name]
         requested_vector = np.array([int(requested_instance['mem_size'].split(' ')[0]),
-                                     int(requested_instance['num_cores']),
-                                     int(requested_instance['disk_size'].split(' ')[0])])
+                                     int(requested_instance['num_cores'])]) 
+#                                      int(requested_instance['disk_size'].split(' ')[0])])
         for flavor in flavors:
-            available_vector = np.array([flavor['memory_in_mb'], flavor['number_of_cores'], flavor['resource_disk_size_in_mb']])
+#             available_vector = np.array([flavor['memory_in_mb'], flavor['number_of_cores'], flavor['resource_disk_size_in_mb']])
+            available_vector = np.array([flavor['memory_in_mb'], flavor['number_of_cores'])
             dist = norm(requested_vector - available_vector)
             if dist < min_dist:
                 min_dist = dist
