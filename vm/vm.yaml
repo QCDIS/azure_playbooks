@@ -5,6 +5,7 @@
     name: "{{ async_item.key | replace('_', '') }}"
     admin_username: "{{ async_item.value['user_name']}}"
     ssh_password_enabled: false
+    os_disk_size_gb: 10
     image:
       offer: "{{ async_item.value['updated_os_distro']  }}"
       publisher: "{{async_item.value['image']['publisher_name']}}"
@@ -18,7 +19,7 @@
       - lun: 0
         disk_size_gb: "{{ async_item.value['disk_size'] | replace(' MB','') | int // 1000 }}"
         caching: ReadWrite
-        managed_disk_type: StandardSSD_LRS
+#        managed_disk_type: StandardSSD_LRS
     open_ports:
       - 22
       - 80
