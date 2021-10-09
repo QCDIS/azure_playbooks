@@ -14,11 +14,11 @@
       - path: /home/{{ async_item.value['user_name'] }}/.ssh/authorized_keys
         key_data: "{{ async_item.value['user_key_pair']['keys']['public_key'] | b64decode }}"
     vm_size: "{{async_item.value['flavor_name']}}"
-#   data_disks:
-#     - lun: 0
-#       disk_size_gb: "{{ async_item.value['disk_size'] | replace(' MB','') | int // 1000 }}"
-#       caching: ReadWrite
-#       managed_disk_type: StandardSSD_LRS
+  data_disks:
+    - lun: 0
+      disk_size_gb: "{{ async_item.value['disk_size'] | replace(' MB','') | int // 1000 }}"
+      caching: ReadWrite
+      managed_disk_type: StandardSSD_LRS
     open_ports:
       - 22
       - 80
