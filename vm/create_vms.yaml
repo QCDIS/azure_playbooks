@@ -31,6 +31,9 @@
         file: /tmp/vms.json
         name: vms
         
+    - set_fact:
+        vm_list: "{{ vms | dict2items }}"
+
       
 #     - name: Run items asynchronously in batch
 #       vars:
@@ -41,7 +44,7 @@
       vars:
         vm_info: "{{ item }}"
       include_tasks: execute_batch.yml
-      loop: "{{ vms | batch(50) | list }}"
+      loop: "{{ vm_list | batch(50) | list }}"
   
   
   
