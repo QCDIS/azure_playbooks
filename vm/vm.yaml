@@ -70,16 +70,8 @@
     extensions:
       - 'json'
     name: vm_attribues
-      
-      
-# - debug:
-#     var: item
-#   loop: "{{async_poll_results.results}}"  
      
 - set_stats:
     data:
       vm: "{{ vm_attribues }}"
-      
-  
-# - debug:
-#     var: async_vm_output
+
