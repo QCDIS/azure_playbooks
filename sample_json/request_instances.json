@@ -1,0 +1,10 @@
+{
+  "compute_0_topology_2": {
+    "disk_size": "10000 MB",
+    "mem_size": "2048 MB",
+    "num_cores": "1",
+    "os_distro": "Ubuntu",
+    "os_version": "18.04",
+    "user_name": "vm_user"
+  }
+}
