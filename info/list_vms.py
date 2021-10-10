@@ -29,8 +29,7 @@ if __name__ == '__main__':
         dict_vm_size = {'name': vm_size.name, 'max_data_disk_count': vm_size.max_data_disk_count,
                         'memory_in_mb': vm_size.memory_in_mb, 'number_of_cores': vm_size.number_of_cores,
                         'os_disk_size_in_mb': vm_size.os_disk_size_in_mb,
-                        'resource_disk_size_in_mb': 10000}
-                        # 'resource_disk_size_in_mb': vm_size.resource_disk_size_in_mb}
+                        'resource_disk_size_in_mb': vm_size.resource_disk_size_in_mb}
         virtual_machine_sizes.append(dict_vm_size)
 
     print(json.dumps(virtual_machine_sizes))

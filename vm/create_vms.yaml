@@ -5,9 +5,16 @@
   vars:
     ansible_python_interpreter: /usr/bin/python3
 
-  tasks:  
-  
-  
+  tasks:
+
+    - debug:
+        var: item
+      loop: "{{ hostvars['localhost']['instances'] | dict2items }}"
+#assign_public_ip
+#    - set_fact:
+#        "{{ hostvars['localhost']['instances'] }}"
+#- when: hostlist|selectattr("name", "equalto", ansible_hostname)|list|length == 0
+
   
     - local_action: copy content={{ item.value }} dest=/tmp/{{ item.name }}.json
       with_items:

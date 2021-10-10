@@ -1,5 +1,3 @@
-
-        
 - azure_rm_virtualmachine:
     resource_group: "{{async_item.value['resourcegroup']}}"
     name: "{{ async_item.key | replace('_', '') }}"
@@ -18,7 +16,6 @@
       - lun: 0
         disk_size_gb: "{{ async_item.value['disk_size'] | replace(' MB','') | int // 1000 }}"
         caching: ReadWrite
-#        managed_disk_type: StandardSSD_LRS
     open_ports:
       - 22
       - 80
