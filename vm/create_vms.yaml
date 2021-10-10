@@ -6,16 +6,6 @@
     ansible_python_interpreter: /usr/bin/python3
 
   tasks:
-
-    - debug:
-        var: item
-      loop: "{{ hostvars['localhost']['instances'] | dict2items }}"
-#assign_public_ip
-#    - set_fact:
-#        "{{ hostvars['localhost']['instances'] }}"
-#- when: hostlist|selectattr("name", "equalto", ansible_hostname)|list|length == 0
-
-  
     - local_action: copy content={{ item.value }} dest=/tmp/{{ item.name }}.json
       with_items:
         - { name: selected_flavors, value: "{{ selected_flavors }}" }
@@ -25,12 +15,12 @@
         - { name: instances, value: "{{ hostvars['localhost']['instances'] }}" }
         - { name: images, value: "{{ images }}" }
         
-        
+    - shell: python "{{ playbook_dir }}"/add_missing_keys.py /tmp/instances.json > /tmp/updated_instances.json
 
     - shell: jq -s '.[0] * .[1]' /tmp/selected_flavors.json /tmp/ssh_keys.json > /tmp/flavors_ssh_keys.json
     - shell: jq -s '.[0] * .[1]' /tmp/resourcegroup.json /tmp/flavors_ssh_keys.json > /tmp/flavors_ssh_keys_resourcegroup.json
     - shell: jq -s '.[0] * .[1]' /tmp/networks.json /tmp/flavors_ssh_keys_resourcegroup.json > /tmp/flavors_ssh_keys_resourcegroup_networks.json
-    - shell: jq -s '.[0] * .[1]' /tmp/instances.json /tmp/flavors_ssh_keys_resourcegroup_networks.json > /tmp/flavors_ssh_keys_resourcegroup_networks_instances.json
+    - shell: jq -s '.[0] * .[1]' /tmp/updated_instances.json /tmp/flavors_ssh_keys_resourcegroup_networks.json > /tmp/flavors_ssh_keys_resourcegroup_networks_instances.json
     - shell: jq -s '.[0] * .[1]' /tmp/images.json /tmp/flavors_ssh_keys_resourcegroup_networks_instances.json > /tmp/vms.json
     
   
